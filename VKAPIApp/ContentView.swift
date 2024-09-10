@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     
@@ -15,8 +16,20 @@ struct ContentView: View {
         if token.isEmpty, let url = AuthURLBuilder.current.url {
             AuthWebView(authURL: url)
         } else {
-            Text("Вы зарегистрированы")
+            TabBarView(store: .init(
+                initialState: TabBarFeature.State(),
+                reducer: {
+                    TabBarFeature()
+                }
+            ))
+            .onFirstAppear(perform: setupTabBar)
         }
+    }
+}
+
+private extension ContentView {
+    func setupTabBar() {
+        UITabBar.appearance().unselectedItemTintColor = .black
     }
 }
 
