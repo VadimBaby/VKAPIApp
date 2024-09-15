@@ -26,12 +26,14 @@ private extension TabBarView {
     var friendsTabView: some View {
         let tab = TabBarFeature.Tab.friends
         
-        Color.red.ignoresSafeArea()
-            .tabItem {
-                Label(tab.title, systemImage: tab.icon)
-            }
-            .tag(tab)
-            .safeAreaInset(edge: .top) { navigateToTabButton(.profile) }
+        FriendsListView(store: .init(
+            initialState: FriendsListFeature.State(),
+            reducer: { FriendsListFeature() }
+        ))
+        .tabItem {
+            Label(tab.title, systemImage: tab.icon)
+        }
+        .tag(tab)
     }
     
     @ViewBuilder
@@ -43,17 +45,6 @@ private extension TabBarView {
                 Label(tab.title, systemImage: tab.icon)
             }
             .tag(tab)
-            .safeAreaInset(edge: .top) { navigateToTabButton(.friends) }
-    }
-    
-    @ViewBuilder func navigateToTabButton(_ tab: TabBarFeature.Tab) -> some View {
-        Button("To \(tab.rawValue.capitalized)") {
-            store.send(.change(tab: tab))
-        }
-        .foregroundStyle(Color.white)
-        .padding()
-        .background(Color.black)
-        .padding(.top)
     }
 }
 

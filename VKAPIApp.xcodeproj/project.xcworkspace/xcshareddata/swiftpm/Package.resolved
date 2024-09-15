@@ -1,6 +1,15 @@
 {
-  "originHash" : "81d703dd6e7ef361d922e4159d56e99fa7337762368097761b4ba0ff022b4d31",
+  "originHash" : "83b85d3337be536a942fd78e4ae4f0c3208fce9cc33c34b17dbe521f9ef61894",
   "pins" : [
+    {
+      "identity" : "asyncnetwork",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DmitriqPanteleev/AsyncNetwork.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d947e2163b2238c3138941c878ada7ad85317c7f"
+      }
+    },
     {
       "identity" : "combine-schedulers",
       "kind" : "remoteSourceControl",

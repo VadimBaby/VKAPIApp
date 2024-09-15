@@ -21,4 +21,8 @@ enum Consts {
         static let redirectUriKey = "redirect_uri"
         static let redirectUriValue = "https://oauth.vk.com/blank.html"
     }
+    
+    enum Base {
+        static let hostURL = "api.vk.com"
+    }
 }
