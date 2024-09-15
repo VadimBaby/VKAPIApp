@@ -23,6 +23,9 @@ struct ContentView: View {
                 }
             ))
             .onFirstAppear(perform: setupTabBar)
+            .onFirstAppear {
+                print(token)
+            }
         }
     }
 }

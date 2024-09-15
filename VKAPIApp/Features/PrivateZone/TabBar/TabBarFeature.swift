@@ -21,6 +21,8 @@ struct TabBarFeature {
     }
     
     var body: some ReducerOf<Self> {
+        BindingReducer()
+        
         Reduce { state, action in
             switch action {
             case .change(let tab):

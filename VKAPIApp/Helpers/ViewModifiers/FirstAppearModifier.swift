@@ -17,7 +17,7 @@ struct FirstAppearModifier: ViewModifier {
         content
             .onAppear {
                 guard isFirstAppear else { return }
-                defer { isFirstAppear = false }
+                defer { isFirstAppear = false  }
                 action()
             }
     }
