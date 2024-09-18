@@ -13,10 +13,10 @@ struct LastSeen {
 }
 
 extension LastSeen {
-    init(from serverModel: ServerFriendLastSeenModel) {
+    init(from serverModel: ServerUserLastSeenModel) {
         self.init(
             date: serverModel.time?.dateFromUnix(),
-            plarfrom: .init(rawValue: serverModel.plarform ?? 0)
+            plarfrom: .init(rawValue: serverModel.plarform.orZero)
         )
     }
 }

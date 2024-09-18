@@ -12,23 +12,38 @@ import ComposableArchitecture
 struct TabBarFeature {
     @ObservableState
     struct State {
+        var friends = FriendsListFeature.State()
+        var profile = ProfileFeature.State()
+        
         var currentTab: Tab = .friends
     }
     
     enum Action: BindableAction {
-        case change(tab: Tab)
         case binding(BindingAction<State>)
+        
+        case friends(FriendsListFeature.Action)
+        case profile(ProfileFeature.Action)
+        
+        case change(tab: Tab)
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
+        
+        Scope(state: \.friends, action: \.friends) {
+            FriendsListFeature()
+        }
+        
+        Scope(state: \.profile, action: \.profile) {
+            ProfileFeature()
+        }
         
         Reduce { state, action in
             switch action {
             case .change(let tab):
                 state.currentTab = tab
                 return .none
-            case .binding:
+            case .binding, .friends, .profile:
                 print("change")
                 return .none
             }

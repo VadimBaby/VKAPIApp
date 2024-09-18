@@ -13,7 +13,7 @@ struct FriendsListFeature {
     
     @ObservableState
     struct State: Equatable {
-        var friends: [Friend] = []
+        var friends: [User] = []
         var loadableView = LoadableViewFeature.State()
         
         // MARK: - Pagination
@@ -31,7 +31,7 @@ struct FriendsListFeature {
         
         // MARK: - Requests
         case getFriends
-        case getFriendsResponse(Result<ResponseModel<Friend>, Error>)
+        case getFriendsResponse(Result<ResponseModel<User>, Error>)
     }
     
     @Dependency(\.friendsClient) private var friendsClient

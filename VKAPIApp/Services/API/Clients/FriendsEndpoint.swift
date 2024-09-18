@@ -28,7 +28,7 @@ enum FriendsEndpoint: RequestEndpoint {
         var params: [String: String] = [:]
         
         params["access_token"] = UserStorage.shared.token.orEmpty
-        params["fields"] = "bdate,city,country,last_seen,online,photo_100,sex"
+        params["fields"] = "bdate,city,country,last_seen,online,photo_50,photo_100,sex"
         params["offset"] = String(offset)
         params["count"] = String(count)
         params["v"] = "5.199"

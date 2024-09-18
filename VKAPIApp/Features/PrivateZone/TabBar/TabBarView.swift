@@ -26,21 +26,18 @@ private extension TabBarView {
     var friendsTabView: some View {
         let tab = TabBarFeature.Tab.friends
         
-        FriendsListView(store: .init(
-            initialState: FriendsListFeature.State(),
-            reducer: { FriendsListFeature() }
-        ))
-        .tabItem {
-            Label(tab.title, systemImage: tab.icon)
-        }
-        .tag(tab)
+        FriendsListView(store: store.scope(state: \.friends, action: \.friends))
+            .tabItem {
+                Label(tab.title, systemImage: tab.icon)
+            }
+            .tag(tab)
     }
     
     @ViewBuilder
     var profileTabView: some View {
         let tab = TabBarFeature.Tab.profile
         
-        Color.green.ignoresSafeArea()
+        ProfileView(store: store.scope(state: \.profile, action: \.profile))
             .tabItem {
                 Label(tab.title, systemImage: tab.icon)
             }

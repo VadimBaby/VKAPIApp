@@ -41,7 +41,7 @@ struct FriendsListView: View {
             .navigationTitle("Друзья")
             .onAppear(perform: appearAction)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.systemGray6)
+            .ignoresSafeAreaBackground(.systemGray6)
         }
     }
 }
