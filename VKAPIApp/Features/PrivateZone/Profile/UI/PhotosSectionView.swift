@@ -9,13 +9,8 @@ import SwiftUI
 
 struct PhotosSectionView: View {
     
-    private let photosSizes: [PhotoSize]
-    private let isPhotoLoading: Bool
-    
-    init(_ photosSizes: [PhotoSize], isPhotoLoading: Bool) {
-        self.photosSizes = photosSizes
-        self.isPhotoLoading = isPhotoLoading
-    }
+    let photosSizes: [PhotoSize]
+    let isPhotoLoading: Bool
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -50,7 +45,7 @@ fileprivate enum Constants {
         Color.systemGray6.ignoresSafeArea()
         
         PhotosSectionView(
-            (1...5).map{ _ in PhotoSize.mock },
+            photosSizes: (1...5).map{ _ in PhotoSize.mock },
             isPhotoLoading: false
         )
         .padding()

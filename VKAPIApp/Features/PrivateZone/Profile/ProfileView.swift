@@ -20,16 +20,16 @@ struct ProfileView: View {
                 ScrollView {
                     VStack(spacing: 15) {
                         ProfileSectionView(
-                            store.profile,
+                            profile: store.profile,
                             isProfileLoading: store.isProfileLoading
                         )
                         FriendsSectionView(
-                            store.friends,
+                            friends: store.friends,
                             friendsCommonCount: store.friendsCommonCount,
                             isFriendsLoading: store.isFriendsLoading
                         )
                         PhotosSectionView(
-                            store.photosSizes,
+                            photosSizes: store.photosSizes,
                             isPhotoLoading: store.isPhotosLoading)
                         
                     }

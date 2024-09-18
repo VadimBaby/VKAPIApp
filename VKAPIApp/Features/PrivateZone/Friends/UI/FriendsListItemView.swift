@@ -14,7 +14,7 @@ struct FriendsListItemView: View {
     var body: some View {
         HStack {
             ProfileImageView(
-                url: friend.photo,
+                url: friend.displayPhoto,
                 online: friend.online,
                 onlineMobile: friend.onlineMobile
             )

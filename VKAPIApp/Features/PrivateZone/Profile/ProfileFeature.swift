@@ -27,7 +27,7 @@ struct ProfileFeature {
         var isPhotosLoading = false
         var photos: [Photo] = []
         var photosSizes: [PhotoSize] {
-            photos.flatMap(\.sizes)
+            photos.flatMap(\.sizes).filter{ $0.type == "m" }
         }
     }
     
@@ -97,6 +97,7 @@ struct ProfileFeature {
                     )
                 }
             case let .profileResponse(.success(model)):
+                print("profile: \(model)")
                 state.profile = model
                 state.isProfileLoading = false
                 return .none

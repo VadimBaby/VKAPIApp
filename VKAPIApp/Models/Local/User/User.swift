@@ -39,6 +39,10 @@ extension User {
             return DateFormatters.dayAndMonthFormatter.string(from: date)
         }
     }
+    
+    var displayPhoto: URL? {
+        return photo ?? photoBig ?? photoSmall ?? nil
+    }
 }
 
 // MARK: - Inits

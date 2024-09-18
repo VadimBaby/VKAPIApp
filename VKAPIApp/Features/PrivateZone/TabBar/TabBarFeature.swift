@@ -44,7 +44,6 @@ struct TabBarFeature {
                 state.currentTab = tab
                 return .none
             case .binding, .friends, .profile:
-                print("change")
                 return .none
             }
         }

@@ -9,15 +9,9 @@ import SwiftUI
 
 struct FriendsSectionView: View {
     
-    private let friends: [User]
-    private let friendsCommonCount: Int
-    private let isFriendsLoading: Bool
-    
-    init(_ friends: [User], friendsCommonCount: Int, isFriendsLoading: Bool) {
-        self.friends = friends
-        self.friendsCommonCount = friendsCommonCount
-        self.isFriendsLoading = isFriendsLoading
-    }
+    let friends: [User]
+    let friendsCommonCount: Int
+    let isFriendsLoading: Bool
     
     var body: some View {
         HStack {
@@ -64,7 +58,7 @@ fileprivate enum Constants {
         Color.systemGray6.ignoresSafeArea()
         
         FriendsSectionView(
-            (1...5).map{ _ in User.mock },
+            friends: (1...5).map{ _ in User.mock },
             friendsCommonCount: 100,
             isFriendsLoading: false
         )

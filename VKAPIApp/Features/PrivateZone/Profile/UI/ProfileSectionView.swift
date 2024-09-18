@@ -9,18 +9,13 @@ import SwiftUI
 
 struct ProfileSectionView: View {
     
-    private let profile: User
-    private let isProfileLoading: Bool
-    
-    init(_ profile: User, isProfileLoading: Bool) {
-        self.profile = profile
-        self.isProfileLoading = isProfileLoading
-    }
+    let profile: User
+    let isProfileLoading: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             ProfileImageView(
-                url: profile.photo,
+                url: profile.displayPhoto,
                 online: true,
                 onlineMobile: true,
                 size: 120
@@ -62,7 +57,10 @@ struct ProfileSectionView: View {
     ZStack {
         Color.systemGray6.ignoresSafeArea()
         
-        ProfileSectionView(User.mock, isProfileLoading: false)
-            .padding()
+        ProfileSectionView(
+            profile: User.mock,
+            isProfileLoading: false
+        )
+        .padding()
     }
 }
