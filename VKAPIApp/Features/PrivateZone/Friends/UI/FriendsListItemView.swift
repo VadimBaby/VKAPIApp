@@ -9,12 +9,12 @@ import SwiftUI
 
 struct FriendsListItemView: View {
     
-    let friend: Friend
+    let friend: User
     
     var body: some View {
         HStack {
             ProfileImageView(
-                url: friend.photo,
+                url: friend.displayPhoto,
                 online: friend.online,
                 onlineMobile: friend.onlineMobile
             )
@@ -28,10 +28,10 @@ struct FriendsListItemView: View {
                         descriptionView(city)
                     }
                     
-                    if let bithdayString = friend.bithdayString() {
+                    if let displayBirthday = friend.displayBirthday {
                         descriptionView(
                             friend.city.isNil ? "" : ", "
-                            + bithdayString
+                            + displayBirthday
                         )
                     }
                 }

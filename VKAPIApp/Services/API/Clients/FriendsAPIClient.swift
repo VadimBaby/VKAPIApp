@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct FriendsAPIClient {
     @Dependency(\.networkClient) private static var networkClient
     
-    var getList: (_ offset: Int, _ count: Int) async throws -> ResponseModel<Friend>
+    var getList: (_ offset: Int, _ count: Int) async throws -> ResponseModel<User>
 }
 
 
@@ -21,7 +21,7 @@ extension FriendsAPIClient: DependencyKey {
         
         let response = try await networkClient.sendRequest(with: endpoint)
             .decode(
-                to: ServerResponseModel<ServerFriendModel>.self,
+                to: ServerResponseModel<ServerUserModel>.self,
                 at: "response"
             )
         

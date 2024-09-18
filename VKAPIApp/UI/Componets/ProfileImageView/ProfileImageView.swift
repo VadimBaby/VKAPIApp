@@ -12,38 +12,44 @@ struct ProfileImageView: View {
     private let url: URL?
     private let online: Bool?
     private let onlineMobile: Bool?
+    private let size: CGFloat
     
-    init(url: URL?, online: Bool? = nil, onlineMobile: Bool? = nil) {
+    init(url: URL?, online: Bool? = nil, onlineMobile: Bool? = nil, size: CGFloat = 60) {
         self.url = url
         self.online = online
         self.onlineMobile = onlineMobile
+        self.size = size
     }
     
-    private let size: CGFloat = 60
-    
     var body: some View {
-        AsyncImage(url: url) { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: size, height: size)
-                .clipShape(.circle)
-                .overlay(alignment: .bottomTrailing) {
-                    if let online, online {
-                        onlineMark
-                    }
-                }
-        } placeholder: {
-            ProgressView()
-                .frame(width: size, height: size)
+        if let url {
+            AsyncImage(url: url, content: profileImage) {
+                ProgressView()
+                    .frame(width: size, height: size)
+            }
+        } else {
+            profileImage(.init(.emptyUser))
         }
     }
 }
 
 private extension ProfileImageView {
+    @ViewBuilder func profileImage(_ image: Image) -> some View {
+        image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: size, height: size)
+            .clipShape(.circle)
+            .overlay(alignment: .bottomTrailing) {
+                if let online, online {
+                    onlineMark
+                }
+            }
+    }
+    
     @ViewBuilder
     var onlineMark: some View {
-        let onlineSize: CGFloat = 12
+        let onlineSize: CGFloat = size / 5
         
         Group {
             if let onlineMobile, onlineMobile {

@@ -25,6 +25,7 @@ struct DateFormatters {
     static var dayAndMonthFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMMM"
+        formatter.locale = .init(identifier: "ru")
         
         return formatter
     }
@@ -32,6 +33,7 @@ struct DateFormatters {
     static var dayAndMonthAndYearFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMMM yyyy"
+        formatter.locale = .init(identifier: "ru")
         
         return formatter
     }

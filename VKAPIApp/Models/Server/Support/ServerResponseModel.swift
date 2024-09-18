@@ -12,9 +12,9 @@ struct ServerResponseModel<T: Decodable & Localizable>: Decodable {
     let items: [T]?
 }
 
-extension ServerResponseModel: Localizable {
+extension ServerResponseModel {
     func toLocal() -> ResponseModel<T.LocalModel> {
-        let items: [T.LocalModel] = self.items?.map{ $0.toLocal() } ?? []
+        let items: [T.LocalModel] = self.items?.compactMap{ $0.toLocal() } ?? []
             
         return ResponseModel(count: self.count, items: items)
     }

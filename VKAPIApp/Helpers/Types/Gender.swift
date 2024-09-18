@@ -9,5 +9,16 @@ enum Gender: Int {
     case unknown = 0
     case female
     case male
+    
+    var title: String {
+        switch self {
+        case .female:
+            "Женский"
+        case .male:
+            "Мужской"
+        case .unknown:
+            "Не указан"
+        }
+    }
 }
 

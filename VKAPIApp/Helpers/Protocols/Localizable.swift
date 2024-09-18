@@ -10,5 +10,5 @@ import Foundation
 protocol Localizable {
     associatedtype LocalModel
     
-    func toLocal() -> LocalModel
+    func toLocal() -> LocalModel?
 }
