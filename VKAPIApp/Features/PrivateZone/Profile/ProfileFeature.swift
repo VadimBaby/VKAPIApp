@@ -13,6 +13,7 @@ struct ProfileFeature {
     @ObservableState
     struct State {
         var loadableView = LoadableViewFeature.State()
+        var path = StackState<Path.State>()
         
         // MARK: - Profile
         var isProfileLoading: Bool = false
@@ -36,6 +37,10 @@ struct ProfileFeature {
         case onRefresh
         case loadableView(LoadableViewFeature.Action)
         case binding(BindingAction<State>)
+        case path(StackAction<Path.State, Path.Action>)
+        
+        // MARK: - Transitions
+        case showPhotos
         
         // MARK: - Requests
         case allDataRequest
@@ -97,7 +102,6 @@ struct ProfileFeature {
                     )
                 }
             case let .profileResponse(.success(model)):
-                print("profile: \(model)")
                 state.profile = model
                 state.isProfileLoading = false
                 return .none
@@ -146,10 +150,22 @@ struct ProfileFeature {
                 let .photosResponse(.failure(error)):
                 state.loadableView.error = .init(from: error)
                 return .none
-            case .loadableView, .binding:
+            // MARK: - Transitions
+            case .showPhotos:
+                state.path.append(.photos(PhotosFeature.State()))
+                return .none
+            case .path, .loadableView, .binding:
                 return .none
             }
         }
+        .forEach(\.path, action: \.path)
+    }
+}
+
+extension ProfileFeature {
+    @Reducer(state: .equatable)
+    enum Path {
+        case photos(PhotosFeature)
     }
 }
 

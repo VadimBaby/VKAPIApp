@@ -11,7 +11,8 @@ extension View {
     func roundedContainer(
         isContentLoading: Bool,
         isContentEmpty: Bool = false,
-        emptyStateMessage: String = "Пусто"
+        emptyStateMessage: String = "Пусто",
+        action: VoidAction? = nil
     ) -> some View {
         Group {
             if isContentLoading {
@@ -22,6 +23,10 @@ extension View {
                 Text(emptyStateMessage)
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .center)
+            } else if let action {
+                Button(action: action) {
+                    self
+                }
             } else {
                 self
             }

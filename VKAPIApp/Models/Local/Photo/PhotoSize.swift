@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PhotoSize: Identifiable {
+struct PhotoSize: Identifiable, Equatable {
     let id = UUID()
     let height: Double
     let width: Double
@@ -16,6 +16,10 @@ struct PhotoSize: Identifiable {
     
     var size: CGSize {
         .init(width: width, height: height)
+    }
+    
+    var isHorizontal: Bool {
+        width > height
     }
     
     static let mock: Self = .init(

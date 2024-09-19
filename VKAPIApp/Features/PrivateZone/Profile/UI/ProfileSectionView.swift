@@ -10,7 +10,6 @@ import SwiftUI
 struct ProfileSectionView: View {
     
     let profile: User
-    let isProfileLoading: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -49,7 +48,6 @@ struct ProfileSectionView: View {
             }
         }
         .padding()
-        .roundedContainer(isContentLoading: isProfileLoading)
     }
 }
 
@@ -58,8 +56,7 @@ struct ProfileSectionView: View {
         Color.systemGray6.ignoresSafeArea()
         
         ProfileSectionView(
-            profile: User.mock,
-            isProfileLoading: false
+            profile: User.mock
         )
         .padding()
     }
