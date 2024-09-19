@@ -11,7 +11,6 @@ struct FriendsSectionView: View {
     
     let friends: [User]
     let friendsCommonCount: Int
-    let isFriendsLoading: Bool
     
     var body: some View {
         HStack {
@@ -31,11 +30,6 @@ struct FriendsSectionView: View {
             }
         }
         .padding()
-        .roundedContainer(
-            isContentLoading: isFriendsLoading,
-            isContentEmpty: friends.isEmpty,
-            emptyStateMessage: Constants.emptyStateMessage
-        )
     }
 }
 
@@ -59,8 +53,7 @@ fileprivate enum Constants {
         
         FriendsSectionView(
             friends: (1...5).map{ _ in User.mock },
-            friendsCommonCount: 100,
-            isFriendsLoading: false
+            friendsCommonCount: 100
         )
         .padding()
     }

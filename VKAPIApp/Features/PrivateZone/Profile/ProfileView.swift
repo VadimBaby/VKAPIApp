@@ -13,24 +13,36 @@ struct ProfileView: View {
     @Bindable var store: StoreOf<ProfileFeature>
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             LoadableView(
                 store: store.scope(state: \.loadableView, action: \.loadableView)
             ) {
                 ScrollView {
                     VStack(spacing: 15) {
                         ProfileSectionView(
-                            profile: store.profile,
-                            isProfileLoading: store.isProfileLoading
+                            profile: store.profile
                         )
+                        .roundedContainer(isContentLoading: store.isProfileLoading)
+                        
                         FriendsSectionView(
                             friends: store.friends,
-                            friendsCommonCount: store.friendsCommonCount,
-                            isFriendsLoading: store.isFriendsLoading
+                            friendsCommonCount: store.friendsCommonCount
                         )
+                        .roundedContainer(
+                            isContentLoading: store.isFriendsLoading,
+                            isContentEmpty: store.friends.isEmpty,
+                            emptyStateMessage: Constants.friendsEmptyMessage
+                        )
+                        
                         PhotosSectionView(
-                            photosSizes: store.photosSizes,
-                            isPhotoLoading: store.isPhotosLoading)
+                            photosSizes: store.photosSizes
+                        )
+                        .roundedContainer(
+                            isContentLoading: store.isPhotosLoading,
+                            isContentEmpty: store.photosSizes.isEmpty,
+                            emptyStateMessage: Constants.photosEmptyMessage,
+                            action: showPhotos
+                        )
                         
                     }
                     .fontWeight(.medium)
@@ -43,8 +55,13 @@ struct ProfileView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeAreaBackground(.systemGray6)
-            .onAppear(perform: appearAction)
+            .onFirstAppear(perform: appearAction)
             .navigationTitle(Constants.title)
+        } destination: { store in
+            switch store.case {
+            case let .photos(store):
+                PhotosView(store: store)
+            }
         }
     }
 }
@@ -57,10 +74,16 @@ private extension ProfileView {
     func refreshAction() {
         store.send(.onRefresh)
     }
+    
+    func showPhotos() {
+        store.send(.showPhotos)
+    }
 }
 
 fileprivate enum Constants {
     static let title = "Профиль"
+    static let friendsEmptyMessage = "У вас нет друзей"
+    static let photosEmptyMessage = "У вас нет фото"
 }
 
 #Preview {
