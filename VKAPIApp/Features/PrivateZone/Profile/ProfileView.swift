@@ -55,7 +55,7 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeAreaBackground(.systemGray6)
             .onFirstAppear(perform: appearAction)
-            .navigationTitle(Constants.title)
+            .navigationTitle(store.profile.domain ?? Constants.title)
     }
 }
 
