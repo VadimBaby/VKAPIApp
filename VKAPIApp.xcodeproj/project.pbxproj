@@ -48,6 +48,10 @@
 		2CBBE3E72C9E85E4009BE58D /* MyFriendsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3E62C9E85E4009BE58D /* MyFriendsFeature.swift */; };
 		2CBBE3E92C9E87AA009BE58D /* MyFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3E82C9E87AA009BE58D /* MyFriendsView.swift */; };
 		2CBBE3EC2C9E9275009BE58D /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3EB2C9E9275009BE58D /* UserType.swift */; };
+		2CBBE3EF2C9EA439009BE58D /* ServerCommunityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3EE2C9EA439009BE58D /* ServerCommunityModel.swift */; };
+		2CBBE3F22C9EA510009BE58D /* Сommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3F12C9EA510009BE58D /* Сommunity.swift */; };
+		2CBBE3F52C9EA72E009BE58D /* СommunitiesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3F42C9EA72E009BE58D /* СommunitiesEndpoint.swift */; };
+		2CBBE3F82C9EA82D009BE58D /* CommunitiesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3F72C9EA82D009BE58D /* CommunitiesAPIClient.swift */; };
 		2CC99E052C99692E007FFFD0 /* ProfileEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC99E042C99692E007FFFD0 /* ProfileEndpoint.swift */; };
 		2CC99E092C996DEF007FFFD0 /* ServerPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC99E082C996DEF007FFFD0 /* ServerPhotoModel.swift */; };
 		2CC99E0B2C996E8A007FFFD0 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC99E0A2C996E8A007FFFD0 /* Photo.swift */; };
@@ -111,6 +115,10 @@
 		2CBBE3E62C9E85E4009BE58D /* MyFriendsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFriendsFeature.swift; sourceTree = "<group>"; };
 		2CBBE3E82C9E87AA009BE58D /* MyFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFriendsView.swift; sourceTree = "<group>"; };
 		2CBBE3EB2C9E9275009BE58D /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
+		2CBBE3EE2C9EA439009BE58D /* ServerCommunityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCommunityModel.swift; sourceTree = "<group>"; };
+		2CBBE3F12C9EA510009BE58D /* Сommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Сommunity.swift"; sourceTree = "<group>"; };
+		2CBBE3F42C9EA72E009BE58D /* СommunitiesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СommunitiesEndpoint.swift"; sourceTree = "<group>"; };
+		2CBBE3F72C9EA82D009BE58D /* CommunitiesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesAPIClient.swift; sourceTree = "<group>"; };
 		2CC99E042C99692E007FFFD0 /* ProfileEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEndpoint.swift; sourceTree = "<group>"; };
 		2CC99E082C996DEF007FFFD0 /* ServerPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerPhotoModel.swift; sourceTree = "<group>"; };
 		2CC99E0A2C996E8A007FFFD0 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
@@ -415,6 +423,31 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		2CBBE3ED2C9EA425009BE58D /* Сommunity */ = {
+			isa = PBXGroup;
+			children = (
+				2CBBE3EE2C9EA439009BE58D /* ServerCommunityModel.swift */,
+			);
+			path = "Сommunity";
+			sourceTree = "<group>";
+		};
+		2CBBE3F02C9EA500009BE58D /* Сommunity */ = {
+			isa = PBXGroup;
+			children = (
+				2CBBE3F12C9EA510009BE58D /* Сommunity.swift */,
+			);
+			path = "Сommunity";
+			sourceTree = "<group>";
+		};
+		2CBBE3F32C9EA70D009BE58D /* Сommunities */ = {
+			isa = PBXGroup;
+			children = (
+				2CBBE3F42C9EA72E009BE58D /* СommunitiesEndpoint.swift */,
+				2CBBE3F72C9EA82D009BE58D /* CommunitiesAPIClient.swift */,
+			);
+			path = "Сommunities";
+			sourceTree = "<group>";
+		};
 		2CC99E032C996917007FFFD0 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -464,6 +497,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE24ADA2C919060001ED9FA /* Support */,
+				2CBBE3ED2C9EA425009BE58D /* Сommunity */,
 				2CE24ADB2C919399001ED9FA /* User */,
 				2CC99E072C996DDB007FFFD0 /* Photo */,
 			);
@@ -492,6 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				2C11043C2C9566F9007054F6 /* Support */,
+				2CBBE3F02C9EA500009BE58D /* Сommunity */,
 				2CE24ADF2C919556001ED9FA /* User */,
 				2CC99E062C996DBC007FFFD0 /* Photo */,
 			);
@@ -522,20 +557,21 @@
 			isa = PBXGroup;
 			children = (
 				2CBBE3EA2C9E920E009BE58D /* Types */,
+				2CBBE3F32C9EA70D009BE58D /* Сommunities */,
 				2CC99E032C996917007FFFD0 /* Profile */,
-				2CE24AED2C919EA8001ED9FA /* Clients */,
+				2CE24AED2C919EA8001ED9FA /* Friends */,
 				2CE24AEB2C919B95001ED9FA /* NetworkClient.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
 		};
-		2CE24AED2C919EA8001ED9FA /* Clients */ = {
+		2CE24AED2C919EA8001ED9FA /* Friends */ = {
 			isa = PBXGroup;
 			children = (
 				2CE24AEE2C919ECF001ED9FA /* FriendsEndpoint.swift */,
 				2CE24AF02C91A2C7001ED9FA /* FriendsAPIClient.swift */,
 			);
-			path = Clients;
+			path = Friends;
 			sourceTree = "<group>";
 		};
 		2CE24AF22C91A47F001ED9FA /* Friends */ = {
@@ -667,6 +703,7 @@
 				2CC99E0D2C99729D007FFFD0 /* ProfileAPIClient.swift in Sources */,
 				2CBBE3E72C9E85E4009BE58D /* MyFriendsFeature.swift in Sources */,
 				2C0E3B172C88BF8700FE9E13 /* AuthCredentials.swift in Sources */,
+				2CBBE3F82C9EA82D009BE58D /* CommunitiesAPIClient.swift in Sources */,
 				2C1104582C95C8D9007054F6 /* ErrorView.swift in Sources */,
 				2C1104492C957922007054F6 /* DateFormatters.swift in Sources */,
 				2C11044D2C957D0F007054F6 /* LastSeen.swift in Sources */,
@@ -693,6 +730,7 @@
 				2C45A9CD2C92B12E000FBA4A /* LoadableViewFeature.swift in Sources */,
 				2CE24ADD2C9193AB001ED9FA /* ServerUserModel.swift in Sources */,
 				2C11045D2C95DC3C007054F6 /* ErrorEntity.swift in Sources */,
+				2CBBE3EF2C9EA439009BE58D /* ServerCommunityModel.swift in Sources */,
 				2CE24AF42C91A4A2001ED9FA /* FriendsFeature.swift in Sources */,
 				2C368A7B2C9A7F5D0099D52B /* View.swift in Sources */,
 				2CC99E052C99692E007FFFD0 /* ProfileEndpoint.swift in Sources */,
@@ -705,7 +743,9 @@
 				2C0E3B1A2C88BFA800FE9E13 /* AuthURLBuilder.swift in Sources */,
 				2CA387522C9C1ABC0016A75B /* PhotosFeature.swift in Sources */,
 				2CC99E102C997CC0007FFFD0 /* ProfileFeature.swift in Sources */,
+				2CBBE3F52C9EA72E009BE58D /* СommunitiesEndpoint.swift in Sources */,
 				2CE24AEF2C919ECF001ED9FA /* FriendsEndpoint.swift in Sources */,
+				2CBBE3F22C9EA510009BE58D /* Сommunity.swift in Sources */,
 				2CE24AE62C919639001ED9FA /* Optional.swift in Sources */,
 				2C1104412C9567D5007054F6 /* Localizable.swift in Sources */,
 				2CE24AF82C91E04F001ED9FA /* FriendsListItemView.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Group: Identifiable {
+struct Community: Identifiable {
     let id: Int
     let membersCount: Int?
     let activity: String?
@@ -18,8 +18,8 @@ struct Group: Identifiable {
     let photoBig: URL?
 }
 
-extension Group {
-    init(from serverModel: ServerGroupModel) {
+extension Community {
+    init(from serverModel: ServerCommunityModel) {
         self.init(
             id: serverModel.id.orRandomId,
             membersCount: serverModel.membersCount,

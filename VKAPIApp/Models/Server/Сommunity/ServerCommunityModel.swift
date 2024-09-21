@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ServerGroupModel: Decodable {
+struct ServerCommunityModel: Decodable {
     let id: Int?
     let membersCount: Int?
     let activity: String?
@@ -30,8 +30,8 @@ struct ServerGroupModel: Decodable {
     }
 }
 
-extension ServerGroupModel: Localizable {
-    func toLocal() -> Group? {
+extension ServerCommunityModel: Localizable {
+    func toLocal() -> Community? {
         .init(from: self)
     }
 }
