@@ -9,6 +9,7 @@ import Foundation
 
 struct Community: Identifiable, Equatable {
     let id: Int
+    let description: String?
     let membersCount: Int?
     let activity: String?
     let name: String
@@ -26,6 +27,7 @@ extension Community {
     init(from serverModel: ServerCommunityModel) {
         self.init(
             id: serverModel.id.orRandomId,
+            description: serverModel.description,
             membersCount: serverModel.membersCount,
             activity: serverModel.activity,
             name: serverModel.name.orEmpty,
@@ -42,6 +44,7 @@ extension Community {
 extension Community {
     static var mock: Community = .init(
         id: 1,
+        description: "Описание",
         membersCount: 100,
         activity: "News",
         name: "News Public",

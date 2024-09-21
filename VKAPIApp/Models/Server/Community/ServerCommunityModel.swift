@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ServerCommunityModel: Decodable {
     let id: Int?
+    let description: String?
     let membersCount: Int?
     let activity: String?
     let name: String?
@@ -20,6 +21,7 @@ struct ServerCommunityModel: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case id
+        case description
         case membersCount = "members_count"
         case activity
         case name
