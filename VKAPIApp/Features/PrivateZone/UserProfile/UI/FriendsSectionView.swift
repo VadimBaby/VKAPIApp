@@ -24,7 +24,7 @@ struct FriendsSectionView: View {
                 ForEach(friends.indices, id: \.self) { index in
                     let friend = friends[index]
                     
-                    ProfileImageView(url: friend.photo, size: 30)
+                    CircleImageView(url: friend.photo, size: 30)
                         .offset(x: calculateX(with: index))
                 }
             }

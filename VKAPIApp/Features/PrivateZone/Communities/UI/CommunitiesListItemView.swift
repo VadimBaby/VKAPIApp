@@ -13,12 +13,13 @@ struct CommunitiesListItemView: View {
     
     var body: some View {
         HStack {
-            ProfileImageView(url: community.displayPhoto)
+            CircleImageView(url: community.displayPhoto)
             
             VStack(alignment: .leading) {
                 Text(community.name)
                     .foregroundStyle(Color.primary)
                     .font(.title3)
+                    .multilineTextAlignment(.leading)
                 
                 VStack(alignment: .leading, spacing: 0) {
                     if let activity = community.activity {

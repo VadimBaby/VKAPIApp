@@ -24,7 +24,7 @@ struct CommunitiesSectionView: View {
                 ForEach(communities.indices, id: \.self) { index in
                     let community = communities[index]
                     
-                    ProfileImageView(url: community.photo, size: 30)
+                    CircleImageView(url: community.photo, size: 30)
                         .offset(x: calculateX(with: index))
                 }
             }

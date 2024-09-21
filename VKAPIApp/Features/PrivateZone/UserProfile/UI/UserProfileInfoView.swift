@@ -13,7 +13,7 @@ struct UserProfileInfoView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
-            ProfileImageView(
+            CircleImageView(
                 url: profile.displayPhoto,
                 online: profile.online,
                 onlineMobile: profile.onlineMobile,

@@ -13,7 +13,7 @@ struct FriendsListItemView: View {
     
     var body: some View {
         HStack {
-            ProfileImageView(
+            CircleImageView(
                 url: friend.displayPhoto,
                 online: friend.online,
                 onlineMobile: friend.onlineMobile
@@ -23,6 +23,7 @@ struct FriendsListItemView: View {
                 Text(friend.displayName)
                     .foregroundStyle(Color.primary)
                     .font(.title3)
+                    .multilineTextAlignment(.leading)
                 
                 HStack(spacing: 0) {
                     if let city = friend.city {

@@ -13,7 +13,7 @@ struct CommunityProfileInfoView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
-            ProfileImageView(
+            CircleImageView(
                 url: community.displayPhoto,
                 size: 120
             )
