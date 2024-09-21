@@ -25,16 +25,13 @@ struct FriendsListItemView: View {
                     .font(.title3)
                     .multilineTextAlignment(.leading)
                 
-                HStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
                     if let city = friend.city {
-                        descriptionView(city)
+                        TextInfoView(title: "Город", value: city)
                     }
                     
                     if let displayBirthday = friend.displayBirthday {
-                        descriptionView(
-                            friend.city.isNil ? "" : ", "
-                            + displayBirthday
-                        )
+                        TextInfoView(title: "Дата рождения", value: displayBirthday)
                     }
                 }
             }
@@ -46,14 +43,6 @@ struct FriendsListItemView: View {
     }
 }
 
-private extension FriendsListItemView {
-    @ViewBuilder
-    func descriptionView(_ description: String) -> some View {
-        Text(description)
-            .font(.caption)
-            .foregroundStyle(Color.gray)
-    }
-}
 
 #Preview {
     FriendsListItemView(friend: .mock)

@@ -23,11 +23,11 @@ struct CommunitiesListItemView: View {
                 
                 VStack(alignment: .leading, spacing: 0) {
                     if let activity = community.activity {
-                        descriptionView(activity)
+                        TextInfoView(title: activity)
                     }
                     
                     if let membersCount = community.membersCount {
-                        descriptionView("Подписчиков: \(membersCount)")
+                        TextInfoView(title: "Подписчиков", value: membersCount)
                     }
                 }
             }
@@ -36,15 +36,6 @@ struct CommunitiesListItemView: View {
         .padding()
         .background(Color.opposite)
         .clipShape(.rect(cornerRadius: 15))
-    }
-}
-
-private extension CommunitiesListItemView {
-    @ViewBuilder
-    func descriptionView(_ description: String) -> some View {
-        Text(description)
-            .font(.caption)
-            .foregroundStyle(Color.gray)
     }
 }
 
