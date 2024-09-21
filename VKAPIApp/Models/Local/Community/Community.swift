@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Community: Identifiable {
+struct Community: Identifiable, Equatable {
     let id: Int
     let membersCount: Int?
     let activity: String?
@@ -16,6 +16,10 @@ struct Community: Identifiable {
     let photoSmall: URL?
     let photo: URL?
     let photoBig: URL?
+    
+    var displayPhoto: URL? {
+        return photo ?? photoBig ?? photoSmall ?? nil
+    }
 }
 
 extension Community {
@@ -31,4 +35,19 @@ extension Community {
             photoBig: URL(string: serverModel.photoBig.orEmpty)
         )
     }
+}
+
+// MARK: - Mock Data
+
+extension Community {
+    static var mock: Community = .init(
+        id: 1,
+        membersCount: 100,
+        activity: "News",
+        name: "News Public",
+        screenName: "news_public",
+        photoSmall: URL(string: ""),
+        photo: URL(string: "https://clck.ru/3DRS8L"),
+        photoBig: URL(string: "")
+    )
 }
