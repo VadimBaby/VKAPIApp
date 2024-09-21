@@ -21,6 +21,7 @@ struct FriendsListItemView: View {
             
             VStack(alignment: .leading) {
                 Text(friend.displayName)
+                    .foregroundStyle(Color.primary)
                     .font(.title3)
                 
                 HStack(spacing: 0) {

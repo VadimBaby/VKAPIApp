@@ -12,7 +12,7 @@ struct FriendsListView: View {
     @Bindable var store: StoreOf<FriendsListFeature>
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             LoadableView(
                 store: store.scope(
                     state: \.loadableView,
@@ -22,7 +22,9 @@ struct FriendsListView: View {
                 ScrollView {
                     LazyVStack(spacing: 15) {
                         ForEach(store.friends) { friend in
-                            FriendsListItemView(friend: friend)
+                            Button(action: { toProfile(id: friend.id) }) {
+                                FriendsListItemView(friend: friend)
+                            }
                         }
                         
                         if store.friends.count < store.maxFriendsCount {
@@ -42,6 +44,13 @@ struct FriendsListView: View {
             .onAppear(perform: appearAction)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeAreaBackground(.systemGray6)
+        } destination: { store in
+            switch store.case {
+            case let .profile(store):
+                ProfileView(store: store)
+            case let .photos(store):
+                PhotosView(store: store)
+            }
         }
     }
 }
@@ -70,6 +79,10 @@ private extension FriendsListView {
     
     func paginationAction() {
         store.send(.onPaginationLoad)
+    }
+    
+    func toProfile(id: Int) {
+        store.send(.toProfile(id))
     }
 }
 

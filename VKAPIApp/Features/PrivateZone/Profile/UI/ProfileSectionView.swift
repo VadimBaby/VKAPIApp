@@ -15,8 +15,8 @@ struct ProfileSectionView: View {
         VStack(alignment: .leading, spacing: 15) {
             ProfileImageView(
                 url: profile.displayPhoto,
-                online: true,
-                onlineMobile: true,
+                online: profile.online,
+                onlineMobile: profile.onlineMobile,
                 size: 120
             )
             .frame(maxWidth: .infinity, alignment: .center)

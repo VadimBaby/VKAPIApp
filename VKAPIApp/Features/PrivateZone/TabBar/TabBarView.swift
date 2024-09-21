@@ -37,7 +37,7 @@ private extension TabBarView {
     var profileTabView: some View {
         let tab = TabBarFeature.Tab.profile
         
-        ProfileView(store: store.scope(state: \.profile, action: \.profile))
+        MyProfileView(store: store.scope(state: \.myProfile, action: \.myProfile))
             .tabItem {
                 Label(tab.title, systemImage: tab.icon)
             }

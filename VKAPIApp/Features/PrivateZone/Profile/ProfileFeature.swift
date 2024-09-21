@@ -11,9 +11,9 @@ import ComposableArchitecture
 struct ProfileFeature {
     
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var userId: Int?
         var loadableView = LoadableViewFeature.State()
-        var path = StackState<Path.State>()
         
         // MARK: - Profile
         var isProfileLoading: Bool = false
@@ -37,10 +37,9 @@ struct ProfileFeature {
         case onRefresh
         case loadableView(LoadableViewFeature.Action)
         case binding(BindingAction<State>)
-        case path(StackAction<Path.State, Path.Action>)
         
         // MARK: - Transitions
-        case showPhotos
+        case toPhotos(Int?)
         
         // MARK: - Requests
         case allDataRequest
@@ -92,11 +91,16 @@ struct ProfileFeature {
             // MARK: - Profile
             case .profileRequest:
                 state.isProfileLoading = true
-                return .run { send in
+                return .run { [userId = state.userId] send in
                     await send(
                         .profileResponse(
                             Result {
-                                try await profileClient.getProfile()
+                                switch userId {
+                                case .some(let id):
+                                    try await profileClient.getProfile(.user(id: id))
+                                case .none:
+                                    try await profileClient.getProfile(.my)
+                                }
                             }
                         )
                     )
@@ -109,14 +113,24 @@ struct ProfileFeature {
             // MARK: - Friends
             case .friendsRequest:
                 state.isFriendsLoading = true
-                return .run { send in
+                return .run { [userId = state.userId] send in
                     await send(
                         .friendsResponse(
                             Result {
-                                try await friendsClient.getList(
-                                    Constants.friendsOffset,
-                                    Constants.friendsCount
-                                )
+                                switch userId {
+                                case .some(let id):
+                                    try await friendsClient.getList(
+                                        .user(id: id),
+                                        Constants.friendsOffset,
+                                        Constants.friendsCount
+                                    )
+                                case .none:
+                                    try await friendsClient.getList(
+                                        .my,
+                                        Constants.friendsOffset,
+                                        Constants.friendsCount
+                                    )
+                                }
                             }
                         )
                     )
@@ -130,11 +144,16 @@ struct ProfileFeature {
             // MARK: - Photos
             case .photosRequest:
                 state.isPhotosLoading = true
-                return .run { send in
+                return .run { [userId = state.userId] send in
                     await send(
                         .photosResponse(
                             Result {
-                                try await profileClient.getPhotos(nil)
+                                switch userId {
+                                case .some(let id):
+                                    try await profileClient.getPhotos(.user(id: id), .wall)
+                                case .none:
+                                    try await profileClient.getPhotos(.my, .wall)
+                                }
                             }
                         )
                     )
@@ -150,22 +169,10 @@ struct ProfileFeature {
                 let .photosResponse(.failure(error)):
                 state.loadableView.error = .init(from: error)
                 return .none
-            // MARK: - Transitions
-            case .showPhotos:
-                state.path.append(.photos(PhotosFeature.State()))
-                return .none
-            case .path, .loadableView, .binding:
+            case .loadableView, .binding, .toPhotos:
                 return .none
             }
         }
-        .forEach(\.path, action: \.path)
-    }
-}
-
-extension ProfileFeature {
-    @Reducer(state: .equatable)
-    enum Path {
-        case photos(PhotosFeature)
     }
 }
 

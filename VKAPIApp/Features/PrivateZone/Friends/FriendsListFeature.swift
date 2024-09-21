@@ -15,6 +15,7 @@ struct FriendsListFeature {
     struct State: Equatable {
         var friends: [User] = []
         var loadableView = LoadableViewFeature.State()
+        var path = StackState<Path.State>()
         
         // MARK: - Pagination
         var isPaginationLoading: Bool = false
@@ -28,6 +29,10 @@ struct FriendsListFeature {
         case onPaginationLoad
         case loadableView(LoadableViewFeature.Action)
         case binding(BindingAction<State>)
+        
+        // MARK: - Transitions
+        case path(StackAction<Path.State, Path.Action>)
+        case toProfile(Int)
         
         // MARK: - Requests
         case getFriends
@@ -65,6 +70,7 @@ struct FriendsListFeature {
                     await send(.getFriendsResponse(
                         Result {
                             try await friendsClient.getList(
+                                .my,
                                 offset,
                                 Constants.paginationCount
                             )
@@ -93,10 +99,27 @@ struct FriendsListFeature {
             case let .getFriendsResponse(.failure(error)):
                 state.loadableView.error = .init(from: error)
                 return .none
-            case .binding, .loadableView:
+            
+            // MARK: - Transitions
+            case let .toProfile(id):
+                state.path.append(.profile(ProfileFeature.State(userId: id)))
+                return .none
+            case .path(.element(id: _, action: .profile(.toPhotos(let id)))):
+                state.path.append(.photos(PhotosFeature.State(userId: id)))
+                return .none
+            case .path, .binding, .loadableView:
                 return .none
             }
         }
+        .forEach(\.path, action: \.path)
+    }
+}
+
+extension FriendsListFeature {
+    @Reducer(state: .equatable)
+    enum Path {
+        case profile(ProfileFeature)
+        case photos(PhotosFeature)
     }
 }
 

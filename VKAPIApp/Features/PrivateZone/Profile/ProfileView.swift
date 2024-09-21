@@ -9,11 +9,9 @@ import ComposableArchitecture
 import SwiftUI
 
 struct ProfileView: View {
-    
     @Bindable var store: StoreOf<ProfileFeature>
     
     var body: some View {
-        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             LoadableView(
                 store: store.scope(state: \.loadableView, action: \.loadableView)
             ) {
@@ -41,7 +39,7 @@ struct ProfileView: View {
                             isContentLoading: store.isPhotosLoading,
                             isContentEmpty: store.photosSizes.isEmpty,
                             emptyStateMessage: Constants.photosEmptyMessage,
-                            action: showPhotos
+                            action: toPhotos
                         )
                         
                     }
@@ -57,12 +55,6 @@ struct ProfileView: View {
             .ignoresSafeAreaBackground(.systemGray6)
             .onFirstAppear(perform: appearAction)
             .navigationTitle(Constants.title)
-        } destination: { store in
-            switch store.case {
-            case let .photos(store):
-                PhotosView(store: store)
-            }
-        }
     }
 }
 
@@ -75,8 +67,8 @@ private extension ProfileView {
         store.send(.onRefresh)
     }
     
-    func showPhotos() {
-        store.send(.showPhotos)
+    func toPhotos() {
+        store.send(.toPhotos(store.userId))
     }
 }
 

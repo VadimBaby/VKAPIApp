@@ -11,23 +11,21 @@ import ComposableArchitecture
 struct ProfileAPIClient {
     @Dependency(\.networkClient) private static var networkClient
     
-    var getProfile: () async throws -> User
-    var getPhotos: (_ album: AlbumIndentifier?) async throws -> [Photo]
+    var getProfile: (_ userType: UserType) async throws -> User
+    var getPhotos: (_ userType: UserType, _ album: AlbumIndentifier?) async throws -> [Photo]
 }
 
 extension ProfileAPIClient: DependencyKey {
     static var liveValue = ProfileAPIClient(
-        getProfile: {
-            let data = try await sendRequest(with: .getMyProfile, [ServerUserModel].self)
+        getProfile: { userType in
+            let data = try await sendRequest(with: .getProfile(of: userType), [ServerUserModel].self)
             
             guard let profile = data.first else { throw NetworkError.decode(nil) }
             
-            print("aaaaa: \(profile)")
-            
             return .init(from: profile)
         },
-        getPhotos: { indentifier in
-            let data = try await sendRequest(with: .getPhotos(indentifier), ServerResponseModel<ServerPhotoModel>.self)
+        getPhotos: { userType, indentifier in
+            let data = try await sendRequest(with: .getPhotos(of: userType, album: indentifier), ServerResponseModel<ServerPhotoModel>.self)
             
             let localData = data.toLocal()
             
