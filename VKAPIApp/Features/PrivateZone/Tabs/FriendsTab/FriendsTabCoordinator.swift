@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct MyFriendsFeature {
+struct FriendsTabCoordinator {
     @ObservableState
     struct State: Equatable {
         var friends = FriendsFeature.State(userType: .me)
@@ -67,7 +67,7 @@ struct MyFriendsFeature {
     }
 }
 
-extension MyFriendsFeature {
+extension FriendsTabCoordinator {
     @Reducer(state: .equatable)
     enum Path {
         case profile(UserProfileFeature)

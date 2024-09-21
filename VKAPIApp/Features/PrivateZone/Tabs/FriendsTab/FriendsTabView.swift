@@ -8,8 +8,8 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct MyFriendsView: View {
-    @Bindable var store: StoreOf<MyFriendsFeature>
+struct FriendsTabView: View {
+    @Bindable var store: StoreOf<FriendsTabCoordinator>
     
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
@@ -32,8 +32,8 @@ struct MyFriendsView: View {
 }
 
 #Preview {
-    MyFriendsView(store: .init(
-        initialState: MyFriendsFeature.State(),
-        reducer: { MyFriendsFeature() }
+    FriendsTabView(store: .init(
+        initialState: FriendsTabCoordinator.State(),
+        reducer: { FriendsTabCoordinator() }
     ))
 }

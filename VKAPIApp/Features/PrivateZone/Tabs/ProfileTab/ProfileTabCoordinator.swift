@@ -1,24 +1,24 @@
 //
-//  MyCommunitiesFeature.swift
+//  MyProfileFeature.swift
 //  VKAPIApp
 //
-//  Created by Вадим Мартыненко on 21.09.2024.
+//  Created by Вадим Мартыненко on 20.09.2024.
 //
 
 import ComposableArchitecture
 
 @Reducer
-struct MyCommunitiesFeature {
+struct ProfileTabCoordinator {
     @ObservableState
     struct State: Equatable {
-        var communities = CommunitiesFeature.State(userType: .me)
+        var userProfile = UserProfileFeature.State(userType: .me)
         
         // MARK: - Transitions
         var path = StackState<Path.State>()
     }
     
     enum Action: BindableAction {
-        case communities(CommunitiesFeature.Action)
+        case userProfile(UserProfileFeature.Action)
         case binding(BindingAction<State>)
         
         // MARK: - Transitions
@@ -28,17 +28,18 @@ struct MyCommunitiesFeature {
     var body: some ReducerOf<Self> {
         BindingReducer()
         
-        Scope(state: \.communities, action: \.communities) {
-            CommunitiesFeature()
+        Scope(state: \.userProfile, action: \.userProfile) {
+            UserProfileFeature()
         }
         
         Reduce { state, action in
             switch action {
+                
             // MARK: - Transitions
-            case .communities(.toCommunityProfile(let community)):
-                state.path.append(.communityProfile(CommunityProfileFeature.State(community: community)))
+            case .userProfile(.toPhotos):
+                state.path.append(.photos(PhotosFeature.State(userType: .me)))
                 return .none
-            case .binding, .communities, .path:
+            case .path, .binding, .userProfile:
                 return .none
             }
         }
@@ -46,9 +47,9 @@ struct MyCommunitiesFeature {
     }
 }
 
-extension MyCommunitiesFeature {
+extension ProfileTabCoordinator {
     @Reducer(state: .equatable)
     enum Path {
-        case communityProfile(CommunityProfileFeature)
+        case photos(PhotosFeature)
     }
 }

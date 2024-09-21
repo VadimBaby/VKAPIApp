@@ -8,8 +8,8 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct MyCommunitiesView: View {
-    @Bindable var store: StoreOf<MyCommunitiesFeature>
+struct CommunitiesTabView: View {
+    @Bindable var store: StoreOf<CommunitiesTabCoordinator>
     
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
@@ -24,8 +24,8 @@ struct MyCommunitiesView: View {
 }
 
 #Preview {
-    MyCommunitiesView(store: .init(
-        initialState: MyCommunitiesFeature.State(),
-        reducer: { MyCommunitiesFeature() }
+    CommunitiesTabView(store: .init(
+        initialState: CommunitiesTabCoordinator.State(),
+        reducer: { CommunitiesTabCoordinator() }
     ))
 }

@@ -27,7 +27,7 @@ private extension TabBarView {
     var friendsTabView: some View {
         let tab = TabBarFeature.Tab.friends
         
-        MyFriendsView(store: store.scope(state: \.myFriends, action: \.myFriends))
+        FriendsTabView(store: store.scope(state: \.friendsTab, action: \.friendsTab))
             .tabItem {
                 Label(tab.title, systemImage: tab.icon)
             }
@@ -38,7 +38,7 @@ private extension TabBarView {
     var communitiesTabView: some View {
         let tab = TabBarFeature.Tab.communities
         
-        MyCommunitiesView(store: store.scope(state: \.myCommunities, action: \.myCommunities))
+        CommunitiesTabView(store: store.scope(state: \.communitiesTab, action: \.communitiesTab))
             .tabItem {
                 Label(tab.title, systemImage: tab.icon)
             }
@@ -49,7 +49,7 @@ private extension TabBarView {
     var profileTabView: some View {
         let tab = TabBarFeature.Tab.profile
         
-        MyProfileView(store: store.scope(state: \.myProfile, action: \.myProfile))
+        ProfileTabView(store: store.scope(state: \.profileTab, action: \.profileTab))
             .tabItem {
                 Label(tab.title, systemImage: tab.icon)
             }

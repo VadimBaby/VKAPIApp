@@ -12,9 +12,9 @@ import ComposableArchitecture
 struct TabBarFeature {
     @ObservableState
     struct State: Equatable {
-        var myFriends = MyFriendsFeature.State()
-        var myCommunities = MyCommunitiesFeature.State()
-        var myProfile = MyProfileFeature.State()
+        var friendsTab = FriendsTabCoordinator.State()
+        var communitiesTab = CommunitiesTabCoordinator.State()
+        var profileTab = ProfileTabCoordinator.State()
         
         var currentTab: Tab = .friends
     }
@@ -22,29 +22,29 @@ struct TabBarFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         
-        case myFriends(MyFriendsFeature.Action)
-        case myCommunities(MyCommunitiesFeature.Action)
-        case myProfile(MyProfileFeature.Action)
+        case friendsTab(FriendsTabCoordinator.Action)
+        case communitiesTab(CommunitiesTabCoordinator.Action)
+        case profileTab(ProfileTabCoordinator.Action)
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
         
-        Scope(state: \.myFriends, action: \.myFriends) {
-            MyFriendsFeature()
+        Scope(state: \.friendsTab, action: \.friendsTab) {
+            FriendsTabCoordinator()
         }
         
-        Scope(state: \.myCommunities, action: \.myCommunities) {
-            MyCommunitiesFeature()
+        Scope(state: \.communitiesTab, action: \.communitiesTab) {
+            CommunitiesTabCoordinator()
         }
         
-        Scope(state: \.myProfile, action: \.myProfile) {
-            MyProfileFeature()
+        Scope(state: \.profileTab, action: \.profileTab) {
+            ProfileTabCoordinator()
         }
         
         Reduce { state, action in
             switch action {
-            case .binding, .myFriends, .myCommunities, .myProfile:
+            case .binding, .friendsTab, .communitiesTab, .profileTab:
                 return .none
             }
         }

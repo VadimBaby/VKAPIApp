@@ -8,8 +8,8 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct MyProfileView: View {
-    @Bindable var store: StoreOf<MyProfileFeature>
+struct ProfileTabView: View {
+    @Bindable var store: StoreOf<ProfileTabCoordinator>
     
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
@@ -24,8 +24,8 @@ struct MyProfileView: View {
 }
 
 #Preview {
-    MyProfileView(store: .init(
-        initialState: MyProfileFeature.State(),
-        reducer: { MyProfileFeature() }
+    ProfileTabView(store: .init(
+        initialState: ProfileTabCoordinator.State(),
+        reducer: { ProfileTabCoordinator() }
     ))
 }
