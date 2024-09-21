@@ -16,7 +16,9 @@ struct CommunitiesView: View {
             ScrollView {
                 LazyVStack {
                     ForEach(store.communities) { community in
-                        CommunitiesListItemView(community: community)
+                        Button(action: { toCommunityProfileAction(community: community) }) {
+                            CommunitiesListItemView(community: community)
+                        }
                     }
                     
                     if store.communities.count < store.maxCommunitiesCount {
@@ -34,6 +36,12 @@ struct CommunitiesView: View {
         .ignoresSafeAreaBackground(.systemGray6)
         .onFirstAppear(perform: appearAction)
         .navigationTitle(Constants.navigationTitle)
+    }
+}
+
+extension CommunitiesView {
+    func toCommunityProfileAction(community: Community) {
+        store.send(.toCommunityProfile(community))
     }
 }
 

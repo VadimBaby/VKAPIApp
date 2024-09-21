@@ -12,11 +12,17 @@ struct MyCommunitiesFeature {
     @ObservableState
     struct State: Equatable {
         var communities = CommunitiesFeature.State(userType: .me)
+        
+        // MARK: - Transitions
+        var path = StackState<Path.State>()
     }
     
     enum Action: BindableAction {
         case communities(CommunitiesFeature.Action)
         case binding(BindingAction<State>)
+        
+        // MARK: - Transitions
+        case path(StackAction<Path.State, Path.Action>)
     }
     
     var body: some ReducerOf<Self> {
@@ -28,9 +34,21 @@ struct MyCommunitiesFeature {
         
         Reduce { state, action in
             switch action {
-            case .binding, .communities:
+            // MARK: - Transitions
+            case .communities(.toCommunityProfile(let community)):
+                state.path.append(.communityProfile(CommunityProfileFeature.State(community: community)))
+                return .none
+            case .binding, .communities, .path:
                 return .none
             }
         }
+        .forEach(\.path, action: \.path)
+    }
+}
+
+extension MyCommunitiesFeature {
+    @Reducer(state: .equatable)
+    enum Path {
+        case communityProfile(CommunityProfileFeature)
     }
 }

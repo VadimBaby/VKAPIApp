@@ -31,6 +31,9 @@ struct CommunitiesFeature {
         // MARK: - Requests
         case getCommunities
         case getCommunitiesResponse(Result<ArrayInnerResponseModel<Community>, Error>)
+        
+        // MARK: - Transitions
+        case toCommunityProfile(Community)
     }
     
     @Dependency(\.communitiesClient) private var communitiesClient
@@ -94,7 +97,7 @@ struct CommunitiesFeature {
             case let .getCommunitiesResponse(.failure(error)):
                 state.loadableView.error = .init(from: error)
                 return .none
-            case .binding, .loadableView:
+            case .binding, .loadableView, .toCommunityProfile:
                 return .none
             }
         }

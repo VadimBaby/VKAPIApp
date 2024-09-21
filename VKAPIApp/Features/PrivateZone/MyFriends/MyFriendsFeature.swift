@@ -50,6 +50,9 @@ struct MyFriendsFeature {
             case .path(.element(id: _, action: .profile(.toCommunities(let userType)))):
                 state.path.append(.communities(CommunitiesFeature.State(userType: userType)))
                 return .none
+            case .path(.element(id: _, action: .communities(.toCommunityProfile(let community)))):
+                state.path.append(.communityProfile(CommunityProfileFeature.State(community: community)))
+                return .none
                 
             // MARK: - Photos
             case .path(.element(id: _, action: .profile(.toPhotos(let userType)))):
@@ -71,5 +74,6 @@ extension MyFriendsFeature {
         case friends(FriendsFeature)
         case communities(CommunitiesFeature)
         case photos(PhotosFeature)
+        case communityProfile(CommunityProfileFeature)
     }
 }

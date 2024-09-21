@@ -34,6 +34,7 @@ struct MyProfileFeature {
         
         Reduce { state, action in
             switch action {
+            // MARK: - Transitions
             case .userProfile(.toPhotos):
                 state.path.append(.photos(PhotosFeature.State(userType: .me)))
                 return .none

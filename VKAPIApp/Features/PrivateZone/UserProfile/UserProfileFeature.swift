@@ -48,7 +48,7 @@ struct UserProfileFeature {
         case toPhotos(UserType)
         
         // MARK: - Requests
-        case allDataRequest
+        case allDataRequests
         case profileRequest
         case profileResponse(Result<User, Error>)
         case friendsRequest
@@ -75,7 +75,7 @@ struct UserProfileFeature {
             case .onAppear, .loadableView(.onRepeat):
                 state.loadableView.screenState = .loaded
                 
-                return .send(.allDataRequest)
+                return .send(.allDataRequests)
             case .onRefresh:
                 state.loadableView.screenState = .loaded
                 
@@ -89,8 +89,8 @@ struct UserProfileFeature {
                 state.isPhotosLoading = false
                 state.photos = []
                 
-                return .send(.allDataRequest)
-            case .allDataRequest:
+                return .send(.allDataRequests)
+            case .allDataRequests:
                 return .merge(
                     .send(.profileRequest),
                     .send(.friendsRequest),
@@ -111,8 +111,8 @@ struct UserProfileFeature {
                     )
                 }
             case let .profileResponse(.success(profile)):
+                defer { state.isProfileLoading = false }
                 state.profile = profile
-                state.isProfileLoading = false
                 return .none
                 
             // MARK: - Friends
@@ -132,9 +132,9 @@ struct UserProfileFeature {
                     )
                 }
             case let .friendsResponse(.success(result)):
+                defer { state.isFriendsLoading = false }
                 state.friends = result.items
                 state.friendsCommonCount = result.count.orZero
-                state.isFriendsLoading = false
                 return .none
                 
             // MARK: - Community
@@ -154,9 +154,9 @@ struct UserProfileFeature {
                     )
                 }
             case let .communitiesResponse(.success(result)):
+                defer { state.isCommunitiesLoading = false }
                 state.communities = result.items
                 state.communitiesCommonCount = result.count.orZero
-                state.isCommunitiesLoading = false
                 return .none
                 
             // MARK: - Photos
@@ -172,8 +172,8 @@ struct UserProfileFeature {
                     )
                 }
             case let .photosResponse(.success(photos)):
+                defer { state.isPhotosLoading = false }
                 state.photos = photos
-                state.isPhotosLoading = false
                 return .none
             
             // MARK: - Errors

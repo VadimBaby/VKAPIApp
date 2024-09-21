@@ -12,8 +12,13 @@ struct MyCommunitiesView: View {
     @Bindable var store: StoreOf<MyCommunitiesFeature>
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             CommunitiesView(store: store.scope(state: \.communities, action: \.communities))
+        } destination: { store in
+            switch store.case {
+            case let .communityProfile(store):
+                CommunityProfileView(store: store)
+            }
         }
     }
 }

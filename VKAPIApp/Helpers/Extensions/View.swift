@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     func roundedContainer(
-        isContentLoading: Bool,
+        isContentLoading: Bool = false,
         isContentEmpty: Bool = false,
         emptyStateMessage: String = "Пусто",
         action: VoidAction? = nil

@@ -24,6 +24,8 @@ struct MyFriendsView: View {
                 CommunitiesView(store: store)
             case let .photos(store):
                 PhotosView(store: store)
+            case let .communityProfile(store):
+                CommunityProfileView(store: store)
             }
         }
     }
