@@ -25,7 +25,7 @@ extension ProfileAPIClient: DependencyKey {
             return .init(from: profile)
         },
         getPhotos: { userType, indentifier in
-            let data = try await sendRequest(with: .getPhotos(of: userType, album: indentifier), ServerResponseModel<ServerPhotoModel>.self)
+            let data = try await sendRequest(with: .getPhotos(of: userType, album: indentifier), ServerArrayInnerResponseModel<ServerPhotoModel>.self)
             
             let localData = data.toLocal()
             

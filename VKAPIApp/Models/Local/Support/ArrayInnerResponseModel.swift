@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ResponseModel<T> {
+struct ArrayInnerResponseModel<T> {
     let count: Int?
     let items: [T]
 }

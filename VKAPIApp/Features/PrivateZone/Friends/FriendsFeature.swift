@@ -35,7 +35,7 @@ struct FriendsFeature {
         
         // MARK: - Requests
         case getFriends
-        case getFriendsResponse(Result<ResponseModel<User>, Error>)
+        case getFriendsResponse(Result<ArrayInnerResponseModel<User>, Error>)
     }
     
     @Dependency(\.friendsClient) private var friendsClient

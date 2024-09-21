@@ -47,7 +47,7 @@ struct ProfileFeature {
         case profileRequest
         case profileResponse(Result<User, Error>)
         case friendsRequest
-        case friendsResponse(Result<ResponseModel<User>, Error>)
+        case friendsResponse(Result<ArrayInnerResponseModel<User>, Error>)
         case photosRequest
         case photosResponse(Result<[Photo], Error>)
     }

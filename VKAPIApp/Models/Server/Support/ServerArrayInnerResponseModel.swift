@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct ServerResponseModel<T: Decodable & Localizable>: Decodable {
+struct ServerArrayInnerResponseModel<T: Decodable & Localizable>: Decodable {
     let count: Int?
     let items: [T]?
 }
 
-extension ServerResponseModel {
-    func toLocal() -> ResponseModel<T.LocalModel> {
+extension ServerArrayInnerResponseModel {
+    func toLocal() -> ArrayInnerResponseModel<T.LocalModel> {
         let items: [T.LocalModel] = self.items?.compactMap{ $0.toLocal() } ?? []
             
-        return ResponseModel(count: self.count, items: items)
+        return ArrayInnerResponseModel(count: self.count, items: items)
     }
 }
