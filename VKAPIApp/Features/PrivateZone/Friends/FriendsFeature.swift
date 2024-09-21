@@ -13,7 +13,7 @@ struct FriendsFeature {
     
     @ObservableState
     struct State: Equatable {
-        var userId: Int?
+        var userType: UserType
         var friends: [User] = []
         var loadableView = LoadableViewFeature.State()
         
@@ -31,7 +31,7 @@ struct FriendsFeature {
         case binding(BindingAction<State>)
         
         // MARK: - Transitions
-        case toProfile(Int)
+        case toProfile(UserType)
         
         // MARK: - Requests
         case getFriends
@@ -65,23 +65,14 @@ struct FriendsFeature {
                     state.isPaginationLoading = true
                 }
                 
-                return .run { [userId = state.userId, offset = state.paginationOffset] send in
+                return .run { [userType = state.userType, offset = state.paginationOffset] send in
                     await send(.getFriendsResponse(
                         Result {
-                            switch userId {
-                            case .some(let id):
-                                try await friendsClient.getList(
-                                    .user(id: id),
-                                    offset,
-                                    Constants.paginationCount
-                                )
-                            case .none:
-                                try await friendsClient.getList(
-                                    .my,
-                                    offset,
-                                    Constants.paginationCount
-                                )
-                            }
+                            try await friendsClient.getList(
+                                userType,
+                                offset,
+                                Constants.paginationCount
+                            )
                         }
                     ))
                 }

@@ -61,7 +61,7 @@ fileprivate enum Constants {
 
 #Preview {
     PhotosView(store: .init(
-        initialState: PhotosFeature.State(),
+        initialState: PhotosFeature.State(userType: .me),
         reducer: { PhotosFeature() }
     ))
 }

@@ -12,7 +12,7 @@ struct ProfileFeature {
     
     @ObservableState
     struct State: Equatable {
-        var userId: Int?
+        var userType: UserType
         var loadableView = LoadableViewFeature.State()
         
         // MARK: - Profile
@@ -39,8 +39,8 @@ struct ProfileFeature {
         case binding(BindingAction<State>)
         
         // MARK: - Transitions
-        case toPhotos(Int?)
-        case toFriends(Int?)
+        case toPhotos(UserType)
+        case toFriends(UserType)
         
         // MARK: - Requests
         case allDataRequest
@@ -92,16 +92,11 @@ struct ProfileFeature {
             // MARK: - Profile
             case .profileRequest:
                 state.isProfileLoading = true
-                return .run { [userId = state.userId] send in
+                return .run { [userType = state.userType] send in
                     await send(
                         .profileResponse(
                             Result {
-                                switch userId {
-                                case .some(let id):
-                                    try await profileClient.getProfile(.user(id: id))
-                                case .none:
-                                    try await profileClient.getProfile(.my)
-                                }
+                                try await profileClient.getProfile(userType)
                             }
                         )
                     )
@@ -114,24 +109,15 @@ struct ProfileFeature {
             // MARK: - Friends
             case .friendsRequest:
                 state.isFriendsLoading = true
-                return .run { [userId = state.userId] send in
+                return .run { [userType = state.userType] send in
                     await send(
                         .friendsResponse(
                             Result {
-                                switch userId {
-                                case .some(let id):
-                                    try await friendsClient.getList(
-                                        .user(id: id),
-                                        Constants.friendsOffset,
-                                        Constants.friendsCount
-                                    )
-                                case .none:
-                                    try await friendsClient.getList(
-                                        .my,
-                                        Constants.friendsOffset,
-                                        Constants.friendsCount
-                                    )
-                                }
+                                try await friendsClient.getList(
+                                    userType,
+                                    Constants.friendsOffset,
+                                    Constants.friendsCount
+                                )
                             }
                         )
                     )
@@ -145,16 +131,11 @@ struct ProfileFeature {
             // MARK: - Photos
             case .photosRequest:
                 state.isPhotosLoading = true
-                return .run { [userId = state.userId] send in
+                return .run { [userType = state.userType] send in
                     await send(
                         .photosResponse(
                             Result {
-                                switch userId {
-                                case .some(let id):
-                                    try await profileClient.getPhotos(.user(id: id), .wall)
-                                case .none:
-                                    try await profileClient.getPhotos(.my, .wall)
-                                }
+                                try await profileClient.getPhotos(userType, .wall)
                             }
                         )
                     )

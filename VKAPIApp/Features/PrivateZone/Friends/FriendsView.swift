@@ -73,13 +73,13 @@ private extension FriendsView {
     }
     
     func toProfile(id: Int) {
-        store.send(.toProfile(id))
+        store.send(.toProfile(.id(id)))
     }
 }
 
 #Preview {
     FriendsView(store: .init(
-        initialState: FriendsFeature.State(),
+        initialState: FriendsFeature.State(userType: .me),
         reducer: { FriendsFeature() }
     ))
 }

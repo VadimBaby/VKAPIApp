@@ -69,11 +69,11 @@ private extension ProfileView {
     }
     
     func toPhotos() {
-        store.send(.toPhotos(store.userId))
+        store.send(.toPhotos(store.userType))
     }
     
     func toFriends() {
-        store.send(.toFriends(store.userId))
+        store.send(.toFriends(store.userType))
     }
 }
 
@@ -85,7 +85,7 @@ fileprivate enum Constants {
 
 #Preview {
     ProfileView(store: .init(
-        initialState: ProfileFeature.State(),
+        initialState: ProfileFeature.State(userType: .me),
         reducer: {
             ProfileFeature()
         })

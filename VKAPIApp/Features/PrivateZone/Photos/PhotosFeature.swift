@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct PhotosFeature {
     @ObservableState
     struct State: Equatable {
-        var userId: Int?
+        var userType: UserType
         var loadableView = LoadableViewFeature.State()
         
         var photos: [PhotoSize] = []
@@ -45,15 +45,10 @@ struct PhotosFeature {
                 state.photos = []
                 return .send(.photosRequest)
             case .photosRequest:
-                return .run { [userId = state.userId] send in
+                return .run { [userType = state.userType] send in
                     await send(.photosResponse(
                         Result {
-                            switch userId {
-                            case .some(let id):
-                                try await profileClient.getPhotos(.user(id: id), .profile)
-                            case .none:
-                                try await profileClient.getPhotos(.my, .profile)
-                            }
+                            try await profileClient.getPhotos(userType, .profile)
                         }
                     ))
                 }

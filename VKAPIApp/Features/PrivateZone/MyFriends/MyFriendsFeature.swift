@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct MyFriendsFeature {
     @ObservableState
     struct State: Equatable {
-        var friends = FriendsFeature.State()
+        var friends = FriendsFeature.State(userType: .me)
         var path = StackState<Path.State>()
     }
     
@@ -33,18 +33,21 @@ struct MyFriendsFeature {
         Reduce { state, action in
             switch action {
             // MARK: - Transitions
-            case .friends(.toProfile(let id)):
-                state.path.append(.profile(ProfileFeature.State(userId: id)))
+            case .friends(.toProfile(let userType)):
+                state.path.append(.profile(ProfileFeature.State(userType: userType)))
                 return .none
-            case .path(.element(id: _, action: .friends(.toProfile(let id)))):
-                state.path.append(.profile(ProfileFeature.State(userId: id)))
+                
+            case .path(.element(id: _, action: .friends(.toProfile(let userType)))):
+                state.path.append(.profile(ProfileFeature.State(userType: userType)))
                 return .none
-            case .path(.element(id: _, action: .profile(.toFriends(let id)))):
-                state.path.append(.friends(FriendsFeature.State(userId: id)))
+                
+            case .path(.element(id: _, action: .profile(.toFriends(let userType)))):
+                state.path.append(.friends(FriendsFeature.State(userType: userType)))
                 return .none
-            case .path(.element(id: _, action: .profile(.toPhotos(let id)))):
-                state.path.append(.photos(PhotosFeature.State(userId: id)))
+            case .path(.element(id: _, action: .profile(.toPhotos(let userType)))):
+                state.path.append(.photos(PhotosFeature.State(userType: userType)))
                 return .none
+                
             case .binding, .path, .friends:
                 return .none
             }

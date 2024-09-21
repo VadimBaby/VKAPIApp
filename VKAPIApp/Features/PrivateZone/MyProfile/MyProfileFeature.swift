@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct MyProfileFeature {
     @ObservableState
     struct State: Equatable {
-        var profile = ProfileFeature.State()
+        var profile = ProfileFeature.State(userType: .me)
         
         // MARK: - Transitions
         var path = StackState<Path.State>()
@@ -35,7 +35,7 @@ struct MyProfileFeature {
         Reduce { state, action in
             switch action {
             case .profile(.toPhotos):
-                state.path.append(.photos(PhotosFeature.State()))
+                state.path.append(.photos(PhotosFeature.State(userType: .me)))
                 return .none
             case .path, .binding, .profile:
                 return .none
