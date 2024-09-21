@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Community: Identifiable, Equatable {
+struct Community: Identifiable, Equatable, Photographable {
     let id: Int
     let description: String?
     let membersCount: Int?
@@ -17,10 +17,6 @@ struct Community: Identifiable, Equatable {
     let photoSmall: URL?
     let photo: URL?
     let photoBig: URL?
-    
-    var displayPhoto: URL? {
-        return photo ?? photoBig ?? photoSmall ?? nil
-    }
 }
 
 extension Community {

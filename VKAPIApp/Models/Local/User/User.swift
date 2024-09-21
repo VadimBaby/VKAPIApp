@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Identifiable {
+struct User: Identifiable, Photographable {
     let id: Int
     let firstName: String
     let lastName: String
@@ -38,10 +38,6 @@ extension User {
         } else {
             return DateFormatters.dayAndMonthFormatter.string(from: date)
         }
-    }
-    
-    var displayPhoto: URL? {
-        return photo ?? photoBig ?? photoSmall ?? nil
     }
 }
 
