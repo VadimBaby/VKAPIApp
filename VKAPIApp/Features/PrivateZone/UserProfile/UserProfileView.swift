@@ -72,6 +72,8 @@ struct UserProfileView: View {
     }
 }
 
+// MARK: - Functions
+
 private extension UserProfileView {
     func appearAction() {
         store.send(.onAppear)

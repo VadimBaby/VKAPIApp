@@ -71,7 +71,7 @@ struct CommunityProfileFeature {
                 state.membersCommonCount = result.count.orZero
                 return .none
             case let .getMembersResponse(.failure(error)):
-                state.loadableView.error = .init(from: error)
+                state.loadableView.error = ErrorEntity(from: error)
                 return .none
             case .binding, .loadableView:
                 return .none

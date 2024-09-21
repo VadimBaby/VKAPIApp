@@ -181,7 +181,7 @@ struct UserProfileFeature {
                 let .friendsResponse(.failure(error)),
                 let .communitiesResponse(.failure(error)),
                 let .photosResponse(.failure(error)):
-                state.loadableView.error = .init(from: error)
+                state.loadableView.error = ErrorEntity(from: error)
                 return .none
             case .loadableView, .binding, .toFriends, .toCommunities, .toPhotos:
                 return .none

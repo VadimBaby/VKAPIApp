@@ -95,7 +95,7 @@ struct CommunitiesFeature {
                 
                 return .none
             case let .getCommunitiesResponse(.failure(error)):
-                state.loadableView.error = .init(from: error)
+                state.loadableView.error = ErrorEntity(from: error)
                 return .none
             case .binding, .loadableView, .toCommunityProfile:
                 return .none

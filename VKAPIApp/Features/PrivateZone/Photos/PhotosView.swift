@@ -41,6 +41,8 @@ struct PhotosView: View {
     }
 }
 
+// MARK: - Constants
+
 private extension PhotosView {
     func appearAction() {
         store.send(.onAppear)

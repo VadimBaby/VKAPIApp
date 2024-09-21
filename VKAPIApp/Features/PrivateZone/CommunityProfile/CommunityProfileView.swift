@@ -43,6 +43,8 @@ struct CommunityProfileView: View {
     }
 }
 
+// MARK: - Functions
+
 extension CommunityProfileView {
     func appearAction() {
         store.send(.onAppear)

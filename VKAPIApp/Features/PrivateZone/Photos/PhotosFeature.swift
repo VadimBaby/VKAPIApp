@@ -59,7 +59,7 @@ struct PhotosFeature {
                 state.loadableView.screenState = .loaded
                 return .none
             case let .photosResponse(.failure(error)):
-                state.loadableView.error = .init(from: error)
+                state.loadableView.error = ErrorEntity(from: error)
                 return .none
             case .binding, .loadableView:
                 return .none

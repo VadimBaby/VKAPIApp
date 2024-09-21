@@ -15,11 +15,7 @@ struct CommunitiesView: View {
         LoadableView(store: store.scope(state: \.loadableView, action: \.loadableView)) {
             ScrollView {
                 LazyVStack {
-                    ForEach(store.communities) { community in
-                        Button(action: { toCommunityProfileAction(community: community) }) {
-                            CommunitiesListItemView(community: community)
-                        }
-                    }
+                    ForEach(store.communities, content: listItemView)
                     
                     if store.communities.count < store.maxCommunitiesCount {
                         paginationView
@@ -39,13 +35,24 @@ struct CommunitiesView: View {
     }
 }
 
+// MARK: - Functions
+
 extension CommunitiesView {
-    func toCommunityProfileAction(community: Community) {
+    func toProfile(of community: Community) {
         store.send(.toCommunityProfile(community))
     }
 }
 
+// MARK: - Subviews
+
 private extension CommunitiesView {
+    @ViewBuilder
+    func listItemView(community: Community) -> some View {
+        Button(action: { toProfile(of: community) }) {
+            CommunitiesListItemView(community: community)
+        }
+    }
+    
     @ViewBuilder
     var paginationView: some View {
         if store.isPaginationLoading {

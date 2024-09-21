@@ -20,11 +20,7 @@ struct FriendsView: View {
         ) {
             ScrollView {
                 LazyVStack(spacing: 15) {
-                    ForEach(store.friends) { friend in
-                        Button(action: { toProfile(id: friend.id) }) {
-                            FriendsListItemView(friend: friend)
-                        }
-                    }
+                    ForEach(store.friends, content: listItemView)
                     
                     if store.friends.count < store.maxFriendsCount {
                         paginationView
@@ -46,7 +42,16 @@ struct FriendsView: View {
     }
 }
 
+// MARK: - Subviews
+
 private extension FriendsView {
+    @ViewBuilder
+    func listItemView(friend: User) -> some View {
+        Button(action: { toProfile(id: friend.id) }) {
+            FriendsListItemView(friend: friend)
+        }
+    }
+    
     @ViewBuilder
     var paginationView: some View {
         if store.isPaginationLoading {
@@ -58,6 +63,8 @@ private extension FriendsView {
         }
     }
 }
+
+// MARK: - Functions
 
 private extension FriendsView {
     func appearAction() {
