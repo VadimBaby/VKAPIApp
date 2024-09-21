@@ -36,6 +36,9 @@ struct MyFriendsFeature {
             case .friends(.toProfile(let id)):
                 state.path.append(.profile(ProfileFeature.State(userId: id)))
                 return .none
+            case .path(.element(id: _, action: .friends(.toProfile(let id)))):
+                state.path.append(.profile(ProfileFeature.State(userId: id)))
+                return .none
             case .path(.element(id: _, action: .profile(.toFriends(let id)))):
                 state.path.append(.friends(FriendsFeature.State(userId: id)))
                 return .none
