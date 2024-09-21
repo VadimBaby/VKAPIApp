@@ -72,16 +72,3 @@ enum AlbumIndentifier {
         }
     }
 }
-
-enum UserType {
-    case my, user(id: Int)
-    
-    var userId: String? {
-        switch self {
-        case .my:
-            nil
-        case .user(let id):
-            String(id)
-        }
-    }
-}
