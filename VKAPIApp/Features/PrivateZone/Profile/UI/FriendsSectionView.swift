@@ -29,6 +29,7 @@ struct FriendsSectionView: View {
                 }
             }
         }
+        .foregroundStyle(Color.primary)
         .padding()
     }
 }

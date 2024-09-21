@@ -12,46 +12,37 @@ struct FriendsView: View {
     @Bindable var store: StoreOf<FriendsFeature>
     
     var body: some View {
-        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-            LoadableView(
-                store: store.scope(
-                    state: \.loadableView,
-                    action: \.loadableView
-                )
-            ) {
-                ScrollView {
-                    LazyVStack(spacing: 15) {
-                        ForEach(store.friends) { friend in
-                            Button(action: { toProfile(id: friend.id) }) {
-                                FriendsListItemView(friend: friend)
-                            }
-                        }
-                        
-                        if store.friends.count < store.maxFriendsCount {
-                            paginationView
+        LoadableView(
+            store: store.scope(
+                state: \.loadableView,
+                action: \.loadableView
+            )
+        ) {
+            ScrollView {
+                LazyVStack(spacing: 15) {
+                    ForEach(store.friends) { friend in
+                        Button(action: { toProfile(id: friend.id) }) {
+                            FriendsListItemView(friend: friend)
                         }
                     }
-                    .padding()
-                }
-                .refreshable {
-                    Task {
-                        try await Task.sleep(for: .seconds(0.15))
-                        refreshAction()
+                    
+                    if store.friends.count < store.maxFriendsCount {
+                        paginationView
                     }
                 }
+                .padding()
             }
-            .navigationTitle("Друзья")
-            .onAppear(perform: appearAction)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .ignoresSafeAreaBackground(.systemGray6)
-        } destination: { store in
-            switch store.case {
-            case let .profile(store):
-                ProfileView(store: store)
-            case let .photos(store):
-                PhotosView(store: store)
+            .refreshable {
+                Task {
+                    try await Task.sleep(for: .seconds(0.15))
+                    refreshAction()
+                }
             }
         }
+        .navigationTitle("Друзья")
+        .onAppear(perform: appearAction)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeAreaBackground(.systemGray6)
     }
 }
 

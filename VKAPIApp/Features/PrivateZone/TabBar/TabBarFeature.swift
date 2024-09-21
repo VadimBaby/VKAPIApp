@@ -12,7 +12,7 @@ import ComposableArchitecture
 struct TabBarFeature {
     @ObservableState
     struct State: Equatable {
-        var friends = FriendsListFeature.State()
+        var myFriends = MyFriendsFeature.State()
         var myProfile = MyProfileFeature.State()
         
         var currentTab: Tab = .friends
@@ -21,7 +21,7 @@ struct TabBarFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         
-        case friends(FriendsListFeature.Action)
+        case myFriends(MyFriendsFeature.Action)
         case myProfile(MyProfileFeature.Action)
         
         case change(tab: Tab)
@@ -30,8 +30,8 @@ struct TabBarFeature {
     var body: some ReducerOf<Self> {
         BindingReducer()
         
-        Scope(state: \.friends, action: \.friends) {
-            FriendsListFeature()
+        Scope(state: \.myFriends, action: \.myFriends) {
+            MyFriendsFeature()
         }
         
         Scope(state: \.myProfile, action: \.myProfile) {
@@ -43,7 +43,7 @@ struct TabBarFeature {
             case .change(let tab):
                 state.currentTab = tab
                 return .none
-            case .binding, .friends, .myProfile:
+            case .binding, .myFriends, .myProfile:
                 return .none
             }
         }

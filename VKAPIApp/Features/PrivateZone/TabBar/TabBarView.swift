@@ -26,7 +26,7 @@ private extension TabBarView {
     var friendsTabView: some View {
         let tab = TabBarFeature.Tab.friends
         
-        FriendsListView(store: store.scope(state: \.friends, action: \.friends))
+        MyFriendsView(store: store.scope(state: \.myFriends, action: \.myFriends))
             .tabItem {
                 Label(tab.title, systemImage: tab.icon)
             }

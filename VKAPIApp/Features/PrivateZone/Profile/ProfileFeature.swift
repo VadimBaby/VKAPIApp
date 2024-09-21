@@ -40,6 +40,7 @@ struct ProfileFeature {
         
         // MARK: - Transitions
         case toPhotos(Int?)
+        case toFriends(Int?)
         
         // MARK: - Requests
         case allDataRequest
@@ -169,7 +170,7 @@ struct ProfileFeature {
                 let .photosResponse(.failure(error)):
                 state.loadableView.error = .init(from: error)
                 return .none
-            case .loadableView, .binding, .toPhotos:
+            case .loadableView, .binding, .toPhotos, .toFriends:
                 return .none
             }
         }

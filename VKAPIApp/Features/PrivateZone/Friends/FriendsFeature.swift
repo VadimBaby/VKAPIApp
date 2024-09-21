@@ -13,9 +13,9 @@ struct FriendsFeature {
     
     @ObservableState
     struct State: Equatable {
+        var userId: Int?
         var friends: [User] = []
         var loadableView = LoadableViewFeature.State()
-        var path = StackState<Path.State>()
         
         // MARK: - Pagination
         var isPaginationLoading: Bool = false
@@ -31,7 +31,6 @@ struct FriendsFeature {
         case binding(BindingAction<State>)
         
         // MARK: - Transitions
-        case path(StackAction<Path.State, Path.Action>)
         case toProfile(Int)
         
         // MARK: - Requests
@@ -66,14 +65,23 @@ struct FriendsFeature {
                     state.isPaginationLoading = true
                 }
                 
-                return .run { [offset = state.paginationOffset] send in
+                return .run { [userId = state.userId, offset = state.paginationOffset] send in
                     await send(.getFriendsResponse(
                         Result {
-                            try await friendsClient.getList(
-                                .my,
-                                offset,
-                                Constants.paginationCount
-                            )
+                            switch userId {
+                            case .some(let id):
+                                try await friendsClient.getList(
+                                    .user(id: id),
+                                    offset,
+                                    Constants.paginationCount
+                                )
+                            case .none:
+                                try await friendsClient.getList(
+                                    .my,
+                                    offset,
+                                    Constants.paginationCount
+                                )
+                            }
                         }
                     ))
                 }
@@ -99,27 +107,10 @@ struct FriendsFeature {
             case let .getFriendsResponse(.failure(error)):
                 state.loadableView.error = .init(from: error)
                 return .none
-            
-            // MARK: - Transitions
-            case let .toProfile(id):
-                state.path.append(.profile(ProfileFeature.State(userId: id)))
-                return .none
-            case .path(.element(id: _, action: .profile(.toPhotos(let id)))):
-                state.path.append(.photos(PhotosFeature.State(userId: id)))
-                return .none
-            case .path, .binding, .loadableView:
+            case .binding, .loadableView, .toProfile:
                 return .none
             }
         }
-        .forEach(\.path, action: \.path)
-    }
-}
-
-extension FriendsFeature {
-    @Reducer(state: .equatable)
-    enum Path {
-        case profile(ProfileFeature)
-        case photos(PhotosFeature)
     }
 }
 

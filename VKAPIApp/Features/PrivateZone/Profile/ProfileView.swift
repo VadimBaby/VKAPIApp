@@ -29,7 +29,8 @@ struct ProfileView: View {
                         .roundedContainer(
                             isContentLoading: store.isFriendsLoading,
                             isContentEmpty: store.friends.isEmpty,
-                            emptyStateMessage: Constants.friendsEmptyMessage
+                            emptyStateMessage: Constants.friendsEmptyMessage,
+                            action: toFriends
                         )
                         
                         PhotosSectionView(
@@ -69,6 +70,10 @@ private extension ProfileView {
     
     func toPhotos() {
         store.send(.toPhotos(store.userId))
+    }
+    
+    func toFriends() {
+        store.send(.toFriends(store.userId))
     }
 }
 
