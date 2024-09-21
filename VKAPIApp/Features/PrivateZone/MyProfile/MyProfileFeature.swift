@@ -11,14 +11,14 @@ import ComposableArchitecture
 struct MyProfileFeature {
     @ObservableState
     struct State: Equatable {
-        var profile = ProfileFeature.State(userType: .me)
+        var userProfile = UserProfileFeature.State(userType: .me)
         
         // MARK: - Transitions
         var path = StackState<Path.State>()
     }
     
     enum Action: BindableAction {
-        case profile(ProfileFeature.Action)
+        case userProfile(UserProfileFeature.Action)
         case binding(BindingAction<State>)
         
         // MARK: - Transitions
@@ -28,16 +28,16 @@ struct MyProfileFeature {
     var body: some ReducerOf<Self> {
         BindingReducer()
         
-        Scope(state: \.profile, action: \.profile) {
-            ProfileFeature()
+        Scope(state: \.userProfile, action: \.userProfile) {
+            UserProfileFeature()
         }
         
         Reduce { state, action in
             switch action {
-            case .profile(.toPhotos):
+            case .userProfile(.toPhotos):
                 state.path.append(.photos(PhotosFeature.State(userType: .me)))
                 return .none
-            case .path, .binding, .profile:
+            case .path, .binding, .userProfile:
                 return .none
             }
         }

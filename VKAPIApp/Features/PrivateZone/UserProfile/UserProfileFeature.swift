@@ -8,8 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct ProfileFeature {
-    
+struct UserProfileFeature {
     @ObservableState
     struct State: Equatable {
         var userType: UserType
@@ -23,6 +22,11 @@ struct ProfileFeature {
         var isFriendsLoading: Bool = false
         var friends: [User] = []
         var friendsCommonCount: Int = 0
+        
+        // MARK: - Communities
+        var isCommunitiesLoading: Bool = false
+        var communities: [Community] = []
+        var communitiesCommonCount: Int = 0
         
         // MARK: - Photo
         var isPhotosLoading = false
@@ -39,8 +43,9 @@ struct ProfileFeature {
         case binding(BindingAction<State>)
         
         // MARK: - Transitions
-        case toPhotos(UserType)
         case toFriends(UserType)
+        case toCommunities(UserType)
+        case toPhotos(UserType)
         
         // MARK: - Requests
         case allDataRequest
@@ -48,12 +53,15 @@ struct ProfileFeature {
         case profileResponse(Result<User, Error>)
         case friendsRequest
         case friendsResponse(Result<ArrayInnerResponseModel<User>, Error>)
+        case communitiesRequest
+        case communitiesResponse(Result<ArrayInnerResponseModel<Community>, Error>)
         case photosRequest
         case photosResponse(Result<[Photo], Error>)
     }
     
     @Dependency(\.friendsClient) private var friendsClient
     @Dependency(\.profileClient) private var profileClient
+    @Dependency(\.communitiesClient) private var communitiesClient
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -86,6 +94,7 @@ struct ProfileFeature {
                 return .merge(
                     .send(.profileRequest),
                     .send(.friendsRequest),
+                    .send(.communitiesRequest),
                     .send(.photosRequest)
                 )
             
@@ -101,8 +110,8 @@ struct ProfileFeature {
                         )
                     )
                 }
-            case let .profileResponse(.success(model)):
-                state.profile = model
+            case let .profileResponse(.success(profile)):
+                state.profile = profile
                 state.isProfileLoading = false
                 return .none
                 
@@ -115,17 +124,39 @@ struct ProfileFeature {
                             Result {
                                 try await friendsClient.getList(
                                     userType,
-                                    Constants.friendsOffset,
-                                    Constants.friendsCount
+                                    Constants.offset,
+                                    Constants.count
                                 )
                             }
                         )
                     )
                 }
-            case let .friendsResponse(.success(model)):
-                state.friends = model.items
-                state.friendsCommonCount = model.count.orZero
+            case let .friendsResponse(.success(result)):
+                state.friends = result.items
+                state.friendsCommonCount = result.count.orZero
                 state.isFriendsLoading = false
+                return .none
+                
+            // MARK: - Community
+            case .communitiesRequest:
+                state.isCommunitiesLoading = true
+                return .run { [userType = state.userType] send in
+                    await send(
+                        .communitiesResponse(
+                            Result {
+                                try await communitiesClient.getList(
+                                    userType,
+                                    Constants.offset,
+                                    Constants.count
+                                )
+                            }
+                        )
+                    )
+                }
+            case let .communitiesResponse(.success(result)):
+                state.communities = result.items
+                state.communitiesCommonCount = result.count.orZero
+                state.isCommunitiesLoading = false
                 return .none
                 
             // MARK: - Photos
@@ -140,18 +171,19 @@ struct ProfileFeature {
                         )
                     )
                 }
-            case let .photosResponse(.success(models)):
-                state.photos = models
+            case let .photosResponse(.success(photos)):
+                state.photos = photos
                 state.isPhotosLoading = false
                 return .none
             
             // MARK: - Errors
             case let .profileResponse(.failure(error)),
                 let .friendsResponse(.failure(error)),
+                let .communitiesResponse(.failure(error)),
                 let .photosResponse(.failure(error)):
                 state.loadableView.error = .init(from: error)
                 return .none
-            case .loadableView, .binding, .toPhotos, .toFriends:
+            case .loadableView, .binding, .toFriends, .toCommunities, .toPhotos:
                 return .none
             }
         }
@@ -159,6 +191,6 @@ struct ProfileFeature {
 }
 
 fileprivate enum Constants {
-    static let friendsOffset = 0
-    static let friendsCount = 4
+    static let offset = 0
+    static let count = 4
 }

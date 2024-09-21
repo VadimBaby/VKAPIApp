@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProfileSectionView: View {
+struct UserProfileInfoView: View {
     
     let profile: User
     
@@ -55,7 +55,7 @@ struct ProfileSectionView: View {
     ZStack {
         Color.systemGray6.ignoresSafeArea()
         
-        ProfileSectionView(
+        UserProfileInfoView(
             profile: User.mock
         )
         .padding()

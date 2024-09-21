@@ -1,30 +1,30 @@
 //
-//  FriendsSectionView.swift
+//  CommunitiesSectionView.swift
 //  VKAPIApp
 //
-//  Created by Вадим Мартыненко on 18.09.2024.
+//  Created by Вадим Мартыненко on 21.09.2024.
 //
 
 import SwiftUI
 
-struct FriendsSectionView: View {
+struct CommunitiesSectionView: View {
     
-    let friends: [User]
-    let friendsCommonCount: Int
+    let communities: [Community]
+    let communitiesCommonCount: Int
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 5) {
-                Text("Друзья:")
-                Text("\(friendsCommonCount)")
+                Text("Сообщества:")
+                Text("\(communitiesCommonCount)")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
             HStack {
-                ForEach(friends.indices, id: \.self) { index in
-                    let friend = friends[index]
+                ForEach(communities.indices, id: \.self) { index in
+                    let community = communities[index]
                     
-                    ProfileImageView(url: friend.photo, size: 30)
+                    ProfileImageView(url: community.photo, size: 30)
                         .offset(x: calculateX(with: index))
                 }
             }
@@ -34,18 +34,14 @@ struct FriendsSectionView: View {
     }
 }
 
-private extension FriendsSectionView {
+private extension CommunitiesSectionView {
     func calculateX(with index: Int) -> CGFloat {
-        let count = friends.count
+        let count = communities.count
         
         guard index < count - 1 else { return 0 }
         
         return CGFloat(15 * (count - 1 - index))
     }
-}
-
-fileprivate enum Constants {
-    static let emptyStateMessage = "У вас нет друзей"
 }
 
 #Preview {

@@ -39,10 +39,10 @@ struct FriendsView: View {
                 }
             }
         }
-        .navigationTitle("Друзья")
-        .onAppear(perform: appearAction)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeAreaBackground(.systemGray6)
+        .onAppear(perform: appearAction)
+        .navigationTitle("Друзья")
     }
 }
 

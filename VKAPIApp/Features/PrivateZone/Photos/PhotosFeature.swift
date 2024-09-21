@@ -44,6 +44,8 @@ struct PhotosFeature {
             case .onRefresh:
                 state.photos = []
                 return .send(.photosRequest)
+            
+            // MARK: - Photos
             case .photosRequest:
                 return .run { [userType = state.userType] send in
                     await send(.photosResponse(
@@ -52,8 +54,8 @@ struct PhotosFeature {
                         }
                     ))
                 }
-            case let .photosResponse(.success(models)):
-                state.photos = models.flatMap(\.sizes).filter{ $0.type == "s" }
+            case let .photosResponse(.success(photos)):
+                state.photos = photos.flatMap(\.sizes).filter{ $0.type == "s" }
                 state.loadableView.screenState = .loaded
                 return .none
             case let .photosResponse(.failure(error)):

@@ -8,8 +8,8 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct ProfileView: View {
-    @Bindable var store: StoreOf<ProfileFeature>
+struct UserProfileView: View {
+    @Bindable var store: StoreOf<UserProfileFeature>
     
     var body: some View {
             LoadableView(
@@ -17,7 +17,7 @@ struct ProfileView: View {
             ) {
                 ScrollView {
                     VStack(spacing: 15) {
-                        ProfileSectionView(
+                        UserProfileInfoView(
                             profile: store.profile
                         )
                         .roundedContainer(isContentLoading: store.isProfileLoading)
@@ -31,6 +31,17 @@ struct ProfileView: View {
                             isContentEmpty: store.friends.isEmpty,
                             emptyStateMessage: Constants.friendsEmptyMessage,
                             action: toFriends
+                        )
+                        
+                        CommunitiesSectionView(
+                            communities: store.communities,
+                            communitiesCommonCount: store.communitiesCommonCount
+                        )
+                        .roundedContainer(
+                            isContentLoading: store.isCommunitiesLoading,
+                            isContentEmpty: store.communities.isEmpty,
+                            emptyStateMessage: Constants.communitiesEmptyMessage,
+                            action: toCommunities
                         )
                         
                         PhotosSectionView(
@@ -59,7 +70,7 @@ struct ProfileView: View {
     }
 }
 
-private extension ProfileView {
+private extension UserProfileView {
     func appearAction() {
         store.send(.onAppear)
     }
@@ -68,26 +79,31 @@ private extension ProfileView {
         store.send(.onRefresh)
     }
     
-    func toPhotos() {
-        store.send(.toPhotos(store.userType))
-    }
-    
     func toFriends() {
         store.send(.toFriends(store.userType))
+    }
+    
+    func toCommunities() {
+        store.send(.toCommunities(store.userType))
+    }
+    
+    func toPhotos() {
+        store.send(.toPhotos(store.userType))
     }
 }
 
 fileprivate enum Constants {
     static let title = "Профиль"
     static let friendsEmptyMessage = "У вас нет друзей"
+    static let communitiesEmptyMessage = "У вас нет сообществ"
     static let photosEmptyMessage = "У вас нет фото"
 }
 
 #Preview {
-    ProfileView(store: .init(
-        initialState: ProfileFeature.State(userType: .me),
+    UserProfileView(store: .init(
+        initialState: UserProfileFeature.State(userType: .me),
         reducer: {
-            ProfileFeature()
+            UserProfileFeature()
         })
     )
 }

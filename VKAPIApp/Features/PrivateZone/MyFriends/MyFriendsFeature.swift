@@ -33,17 +33,25 @@ struct MyFriendsFeature {
         Reduce { state, action in
             switch action {
             // MARK: - Transitions
+            // MARK: - Profile
             case .friends(.toProfile(let userType)):
-                state.path.append(.profile(ProfileFeature.State(userType: userType)))
+                state.path.append(.profile(UserProfileFeature.State(userType: userType)))
                 return .none
-                
             case .path(.element(id: _, action: .friends(.toProfile(let userType)))):
-                state.path.append(.profile(ProfileFeature.State(userType: userType)))
+                state.path.append(.profile(UserProfileFeature.State(userType: userType)))
                 return .none
                 
+            // MARK: - Friends
             case .path(.element(id: _, action: .profile(.toFriends(let userType)))):
                 state.path.append(.friends(FriendsFeature.State(userType: userType)))
                 return .none
+            
+            // MARK: - Communities
+            case .path(.element(id: _, action: .profile(.toCommunities(let userType)))):
+                state.path.append(.communities(CommunitiesFeature.State(userType: userType)))
+                return .none
+                
+            // MARK: - Photos
             case .path(.element(id: _, action: .profile(.toPhotos(let userType)))):
                 state.path.append(.photos(PhotosFeature.State(userType: userType)))
                 return .none
@@ -59,8 +67,9 @@ struct MyFriendsFeature {
 extension MyFriendsFeature {
     @Reducer(state: .equatable)
     enum Path {
-        case profile(ProfileFeature)
+        case profile(UserProfileFeature)
         case friends(FriendsFeature)
+        case communities(CommunitiesFeature)
         case photos(PhotosFeature)
     }
 }

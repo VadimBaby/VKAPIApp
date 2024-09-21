@@ -17,9 +17,11 @@ struct MyFriendsView: View {
         } destination: { store in
             switch store.case {
             case let .profile(store):
-                ProfileView(store: store)
+                UserProfileView(store: store)
             case let .friends(store):
                 FriendsView(store: store)
+            case let .communities(store):
+                CommunitiesView(store: store)
             case let .photos(store):
                 PhotosView(store: store)
             }

@@ -10,7 +10,6 @@ import Foundation
 
 @Reducer
 struct FriendsFeature {
-    
     @ObservableState
     struct State: Equatable {
         var userType: UserType
@@ -58,6 +57,8 @@ struct FriendsFeature {
                 state.loadableView.error = nil
                 
                 return .send(.getFriends)
+            
+            // MARK: - Friends
             case .getFriends:
                 if state.friends.isEmpty {
                     state.loadableView.screenState = .loading

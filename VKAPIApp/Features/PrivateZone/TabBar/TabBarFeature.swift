@@ -13,6 +13,7 @@ struct TabBarFeature {
     @ObservableState
     struct State: Equatable {
         var myFriends = MyFriendsFeature.State()
+        var myCommunities = MyCommunitiesFeature.State()
         var myProfile = MyProfileFeature.State()
         
         var currentTab: Tab = .friends
@@ -22,9 +23,8 @@ struct TabBarFeature {
         case binding(BindingAction<State>)
         
         case myFriends(MyFriendsFeature.Action)
+        case myCommunities(MyCommunitiesFeature.Action)
         case myProfile(MyProfileFeature.Action)
-        
-        case change(tab: Tab)
     }
     
     var body: some ReducerOf<Self> {
@@ -34,16 +34,17 @@ struct TabBarFeature {
             MyFriendsFeature()
         }
         
+        Scope(state: \.myCommunities, action: \.myCommunities) {
+            MyCommunitiesFeature()
+        }
+        
         Scope(state: \.myProfile, action: \.myProfile) {
             MyProfileFeature()
         }
         
         Reduce { state, action in
             switch action {
-            case .change(let tab):
-                state.currentTab = tab
-                return .none
-            case .binding, .myFriends, .myProfile:
+            case .binding, .myFriends, .myCommunities, .myProfile:
                 return .none
             }
         }
@@ -53,11 +54,12 @@ struct TabBarFeature {
 
 extension TabBarFeature {
     enum Tab: String {
-        case friends, profile
+        case friends, communities, profile
         
         var icon: String {
             switch self {
             case .friends: "person.2.fill"
+            case .communities: "person.3.fill"
             case .profile: "person.crop.circle"
             }
         }
@@ -65,6 +67,7 @@ extension TabBarFeature {
         var title: String {
             switch self {
             case .friends: "Друзья"
+            case .communities: "Сообщества"
             case .profile: "Профиль"
             }
         }

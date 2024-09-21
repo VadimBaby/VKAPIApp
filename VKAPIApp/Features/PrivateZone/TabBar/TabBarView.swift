@@ -15,6 +15,7 @@ struct TabBarView: View {
     var body: some View {
         TabView(selection: $store.currentTab) {
             friendsTabView
+            communitiesTabView
             profileTabView
         }
         .tint(Color.mint)
@@ -27,6 +28,17 @@ private extension TabBarView {
         let tab = TabBarFeature.Tab.friends
         
         MyFriendsView(store: store.scope(state: \.myFriends, action: \.myFriends))
+            .tabItem {
+                Label(tab.title, systemImage: tab.icon)
+            }
+            .tag(tab)
+    }
+    
+    @ViewBuilder
+    var communitiesTabView: some View {
+        let tab = TabBarFeature.Tab.communities
+        
+        MyCommunitiesView(store: store.scope(state: \.myCommunities, action: \.myCommunities))
             .tabItem {
                 Label(tab.title, systemImage: tab.icon)
             }
