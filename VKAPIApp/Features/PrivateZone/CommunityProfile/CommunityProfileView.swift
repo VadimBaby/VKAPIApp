@@ -18,9 +18,10 @@ struct CommunityProfileView: View {
                     CommunityProfileInfoView(community: store.community)
                         .roundedContainer()
                     
-                    FriendsSectionView(
-                        friends: store.members,
-                        friendsCommonCount: store.membersCommonCount
+                    AvatarGroupView(
+                        models: store.members,
+                        title: "Участники",
+                        commonCount: store.membersCommonCount
                     )
                     .roundedContainer(
                         isContentLoading: store.isMembersLoading,

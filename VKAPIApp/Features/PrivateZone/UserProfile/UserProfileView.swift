@@ -22,9 +22,10 @@ struct UserProfileView: View {
                         )
                         .roundedContainer(isContentLoading: store.isProfileLoading)
                         
-                        FriendsSectionView(
-                            friends: store.friends,
-                            friendsCommonCount: store.friendsCommonCount
+                        AvatarGroupView(
+                            models: store.friends,
+                            title: "Друзья",
+                            commonCount: store.friendsCommonCount
                         )
                         .roundedContainer(
                             isContentLoading: store.isFriendsLoading,
@@ -33,9 +34,10 @@ struct UserProfileView: View {
                             action: toFriends
                         )
                         
-                        CommunitiesSectionView(
-                            communities: store.communities,
-                            communitiesCommonCount: store.communitiesCommonCount
+                        AvatarGroupView(
+                            models: store.communities,
+                            title: "Сообщества",
+                            commonCount: store.communitiesCommonCount
                         )
                         .roundedContainer(
                             isContentLoading: store.isCommunitiesLoading,

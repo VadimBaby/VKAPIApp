@@ -1,30 +1,31 @@
 //
-//  FriendsSectionView.swift
+//  AvatarGroupView.swift
 //  VKAPIApp
 //
-//  Created by Вадим Мартыненко on 18.09.2024.
+//  Created by Вадим Мартыненко on 21.09.2024.
 //
 
 import SwiftUI
 
-struct FriendsSectionView: View {
+struct AvatarGroupView<T: Photographable>: View {
     
-    let friends: [User]
-    let friendsCommonCount: Int
+    let models: [T]
+    let title: String
+    let commonCount: Int
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 5) {
-                Text("Друзья:")
-                Text("\(friendsCommonCount)")
+                Text(title)
+                Text(commonCount)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
             HStack {
-                ForEach(friends.indices, id: \.self) { index in
-                    let friend = friends[index]
+                ForEach(models.indices, id: \.self) { index in
+                    let model = models[index]
                     
-                    CircleImageView(url: friend.photo, size: 30)
+                    CircleImageView(url: model.photo, size: 30)
                         .offset(x: calculateX(with: index))
                 }
             }
@@ -34,9 +35,9 @@ struct FriendsSectionView: View {
     }
 }
 
-private extension FriendsSectionView {
+private extension AvatarGroupView {
     func calculateX(with index: Int) -> CGFloat {
-        let count = friends.count
+        let count = models.count
         
         guard index < count - 1 else { return 0 }
         
@@ -48,9 +49,10 @@ private extension FriendsSectionView {
     ZStack {
         Color.systemGray6.ignoresSafeArea()
         
-        FriendsSectionView(
-            friends: (1...5).map{ _ in User.mock },
-            friendsCommonCount: 100
+        AvatarGroupView(
+            models: (1...5).map{ _ in User.mock },
+            title: "Друзья",
+            commonCount: 100
         )
         .padding()
     }
