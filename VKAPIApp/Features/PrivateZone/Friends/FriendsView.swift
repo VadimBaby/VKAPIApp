@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct FriendsListView: View {
-    @Bindable var store: StoreOf<FriendsListFeature>
+struct FriendsView: View {
+    @Bindable var store: StoreOf<FriendsFeature>
     
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
@@ -55,7 +55,7 @@ struct FriendsListView: View {
     }
 }
 
-private extension FriendsListView {
+private extension FriendsView {
     @ViewBuilder
     var paginationView: some View {
         if store.isPaginationLoading {
@@ -68,7 +68,7 @@ private extension FriendsListView {
     }
 }
 
-private extension FriendsListView {
+private extension FriendsView {
     func appearAction() {
         store.send(.onAppear)
     }
@@ -87,8 +87,8 @@ private extension FriendsListView {
 }
 
 #Preview {
-    FriendsListView(store: .init(
-        initialState: FriendsListFeature.State(),
-        reducer: { FriendsListFeature() }
+    FriendsView(store: .init(
+        initialState: FriendsFeature.State(),
+        reducer: { FriendsFeature() }
     ))
 }

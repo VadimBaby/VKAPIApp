@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct FriendsListFeature {
+struct FriendsFeature {
     
     @ObservableState
     struct State: Equatable {
@@ -115,7 +115,7 @@ struct FriendsListFeature {
     }
 }
 
-extension FriendsListFeature {
+extension FriendsFeature {
     @Reducer(state: .equatable)
     enum Path {
         case profile(ProfileFeature)
