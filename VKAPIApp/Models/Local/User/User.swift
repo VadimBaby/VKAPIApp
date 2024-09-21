@@ -34,7 +34,7 @@ extension User {
               let date = Calendar.current.date(from: birthDate) else { return nil }
         
         if birthDate.year.isNotNil {
-            return DateFormatters.dayAndMonthAndYearFormatter.string(from: date)
+            return DateFormatters.dayAndMonthAndYearFormatter.string(from: date) + "г"
         } else {
             return DateFormatters.dayAndMonthFormatter.string(from: date)
         }
