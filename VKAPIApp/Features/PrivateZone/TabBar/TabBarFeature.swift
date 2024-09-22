@@ -20,6 +20,7 @@ struct TabBarFeature {
     }
     
     enum Action: BindableAction {
+        case changeTab(Tab)
         case binding(BindingAction<State>)
         
         case friendsTab(FriendsTabCoordinator.Action)
@@ -44,6 +45,13 @@ struct TabBarFeature {
         
         Reduce { state, action in
             switch action {
+            case .changeTab(let tab):
+                state.currentTab = tab
+                return .none
+            case .profileTab(.userProfile(.toFriends)):
+                return .send(.changeTab(.friends))
+            case .profileTab(.userProfile(.toCommunities)):
+                return .send(.changeTab(.communities))
             case .binding, .friendsTab, .communitiesTab, .profileTab:
                 return .none
             }
