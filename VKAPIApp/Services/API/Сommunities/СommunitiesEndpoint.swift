@@ -9,7 +9,7 @@ import AsyncNetwork
 
 enum CommunitiesEndpoint: RequestEndpoint {
     case getList(of: UserType, offset: Int, count: Int)
-    case getMembers(of: Int, offset: Int, count: Int)
+    case getMembers(by: Int, offset: Int, count: Int)
     
     var host: String {
         Consts.Base.hostURL

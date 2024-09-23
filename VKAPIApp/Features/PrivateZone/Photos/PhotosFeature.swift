@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct PhotosFeature {
     @ObservableState
     struct State: Equatable {
-        var userType: UserType
+        let userType: UserType
         var loadableView = LoadableViewFeature.State()
         
         var photos: [PhotoSize] = []

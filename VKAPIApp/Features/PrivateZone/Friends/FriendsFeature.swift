@@ -12,7 +12,7 @@ import Foundation
 struct FriendsFeature {
     @ObservableState
     struct State: Equatable {
-        var userType: UserType
+        let userType: UserType
         var friends: [User] = []
         var loadableView = LoadableViewFeature.State()
         

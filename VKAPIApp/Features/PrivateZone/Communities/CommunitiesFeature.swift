@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct CommunitiesFeature {
     @ObservableState
     struct State: Equatable {
-        var userType: UserType
+        let userType: UserType
         var communities: [Community] = []
         var loadableView = LoadableViewFeature.State()
         

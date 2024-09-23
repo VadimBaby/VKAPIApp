@@ -11,8 +11,8 @@ import ComposableArchitecture
 struct CommunitiesAPIClient {
     @Dependency(\.networkClient) private static var networkClient
     
-    var getList: (_ of: UserType,_ offset: Int, _ count: Int) async throws -> ArrayInnerResponseModel<Community>
-    var getMembers: (_ of: Int,_ offset: Int, _ count: Int) async throws -> ArrayInnerResponseModel<User>
+    var getList: (_ of: UserType, _ offset: Int, _ count: Int) async throws -> ArrayInnerResponseModel<Community>
+    var getMembers: (_ by: Int, _ offset: Int, _ count: Int) async throws -> ArrayInnerResponseModel<User>
 }
 
 
@@ -30,7 +30,7 @@ extension CommunitiesAPIClient: DependencyKey {
             return response.toLocal()
         },
         getMembers: { communityId, offset, count in
-            let endpoint: CommunitiesEndpoint = .getMembers(of: communityId, offset: offset, count: count)
+            let endpoint: CommunitiesEndpoint = .getMembers(by: communityId, offset: offset, count: count)
             
             let response = try await networkClient.sendRequest(with: endpoint)
                 .decode(
