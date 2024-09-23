@@ -16,7 +16,7 @@ struct CommunityProfileView: View {
             ScrollView {
                 VStack {
                     ProfileInfoView(
-                        avatar: store.community.displayPhoto,
+                        avatar: store.community.displayAvatar,
                         title: store.community.name,
                         description: store.community.description,
                         infoContent: profileContent

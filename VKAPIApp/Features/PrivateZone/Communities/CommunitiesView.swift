@@ -50,7 +50,7 @@ private extension CommunitiesView {
     func listItemView(community: Community) -> some View {
         Button(action: { toProfile(of: community) }) {
             ProfileListItemView(
-                avatar: community.displayPhoto,
+                avatar: community.displayAvatar,
                 title: community.name
             ) {
                 if let activity = community.activity {

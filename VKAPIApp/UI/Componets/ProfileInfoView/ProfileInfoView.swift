@@ -52,7 +52,7 @@ struct ProfileInfoView<Content: View>: View {
 
 #Preview {
     ProfileInfoView(
-        avatar: User.mock.displayPhoto,
+        avatar: User.mock.displayAvatar,
         title: User.mock.displayName,
         description: "desctiption"
     ) {

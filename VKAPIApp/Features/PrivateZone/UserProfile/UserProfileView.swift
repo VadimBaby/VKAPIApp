@@ -18,7 +18,7 @@ struct UserProfileView: View {
                 ScrollView {
                     VStack(spacing: 15) {
                         ProfileInfoView(
-                            avatar: store.profile.displayPhoto,
+                            avatar: store.profile.displayAvatar,
                             title: store.profile.displayName,
                             infoContent: profileContent
                         )

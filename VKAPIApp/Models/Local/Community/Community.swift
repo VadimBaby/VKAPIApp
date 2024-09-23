@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct Community: Identifiable, Equatable, Photographable {
+struct Community: Identifiable, Equatable, Avatarable {
     let id: Int
     let description: String?
     let membersCount: Int?
     let activity: String?
     let name: String
     let screenName: String
-    let photoSmall: URL?
-    let photo: URL?
-    let photoBig: URL?
+    let avatarSmall: URL?
+    let avatar: URL?
+    let avatarBig: URL?
 }
 
 extension Community {
@@ -28,9 +28,9 @@ extension Community {
             activity: serverModel.activity,
             name: serverModel.name.orEmpty,
             screenName: serverModel.screenName.orEmpty,
-            photoSmall: URL(string: serverModel.photoSmall.orEmpty),
-            photo: URL(string: serverModel.photo.orEmpty),
-            photoBig: URL(string: serverModel.photoBig.orEmpty)
+            avatarSmall: URL(string: serverModel.photoSmall.orEmpty),
+            avatar: URL(string: serverModel.photo.orEmpty),
+            avatarBig: URL(string: serverModel.photoBig.orEmpty)
         )
     }
 }
@@ -45,8 +45,8 @@ extension Community {
         activity: "News",
         name: "News Public",
         screenName: "news_public",
-        photoSmall: URL(string: ""),
-        photo: URL(string: "https://clck.ru/3DRS8L"),
-        photoBig: URL(string: "")
+        avatarSmall: URL(string: ""),
+        avatar: URL(string: "https://clck.ru/3DRS8L"),
+        avatarBig: URL(string: "")
     )
 }

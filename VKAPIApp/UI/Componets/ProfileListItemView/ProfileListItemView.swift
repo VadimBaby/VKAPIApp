@@ -54,7 +54,7 @@ struct ProfileListItemView<Content: View>: View {
 
 #Preview {
     ProfileListItemView(
-        avatar: User.mock.displayPhoto,
+        avatar: User.mock.displayAvatar,
         online: User.mock.online,
         onlineMobile: User.mock.onlineMobile,
         title: User.mock.displayName

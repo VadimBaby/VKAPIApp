@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AvatarGroupView<T: Photographable>: View {
+struct AvatarGroupView<T: Avatarable>: View {
     
     let models: [T]
     let title: String
@@ -25,7 +25,7 @@ struct AvatarGroupView<T: Photographable>: View {
                 ForEach(models.indices, id: \.self) { index in
                     let model = models[index]
                     
-                    CircleImageView(url: model.photo, size: 30)
+                    CircleImageView(url: model.displayAvatar, size: 30)
                         .offset(x: calculateX(with: index))
                 }
             }

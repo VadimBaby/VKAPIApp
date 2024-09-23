@@ -49,7 +49,7 @@ private extension FriendsView {
     func listItemView(friend: User) -> some View {
         Button(action: { toProfile(id: friend.id) }) {
             ProfileListItemView(
-                avatar: friend.displayPhoto,
+                avatar: friend.displayAvatar,
                 online: friend.online,
                 onlineMobile: friend.onlineMobile,
                 title: friend.displayName
