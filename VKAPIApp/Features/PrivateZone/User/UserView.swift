@@ -32,7 +32,7 @@ struct UserView: View {
                         .roundedContainer(
                             isContentLoading: store.isFriendsLoading,
                             isContentEmpty: store.friends.isEmpty,
-                            emptyStateMessage: Constants.friendsEmptyMessage,
+                            emptyStateMessage: EmptyMessage.friends.getTitle(of: store.userType),
                             action: toFriends
                         )
                         
@@ -44,7 +44,7 @@ struct UserView: View {
                         .roundedContainer(
                             isContentLoading: store.isCommunitiesLoading,
                             isContentEmpty: store.communities.isEmpty,
-                            emptyStateMessage: Constants.communitiesEmptyMessage,
+                            emptyStateMessage: EmptyMessage.communities.getTitle(of: store.userType),
                             action: toCommunities
                         )
                         
@@ -54,7 +54,7 @@ struct UserView: View {
                         .roundedContainer(
                             isContentLoading: store.isPhotosLoading,
                             isContentEmpty: store.photosSizes.isEmpty,
-                            emptyStateMessage: Constants.photosEmptyMessage,
+                            emptyStateMessage: EmptyMessage.photos.getTitle(of: store.userType),
                             action: toPhotos
                         )
                         
@@ -132,11 +132,41 @@ fileprivate enum Constants {
     static let friendsTitle = "Друзья"
     static let communitiesTitle = "Сообщества"
     static let navigationTitle = "Профиль"
+}
+
+fileprivate enum EmptyMessage {
+    case friends, communities, photos
     
-    // MARK: - Empty Messages
-    static let friendsEmptyMessage = "У вас нет друзей"
-    static let communitiesEmptyMessage = "У вас нет сообществ"
-    static let photosEmptyMessage = "У вас нет фото"
+    func getTitle(of: UserType) -> String {
+        switch of {
+        case .me:
+            getTitleForMyProfile()
+        case .id:
+            getTitleForOtherUser()
+        }
+    }
+    
+    private func getTitleForMyProfile() -> String {
+        switch self {
+        case .friends:
+            "У вас нет друзей"
+        case .communities:
+            "У вас нет сообществ"
+        case .photos:
+            "У вас нет фото"
+        }
+    }
+    
+    private func getTitleForOtherUser() -> String {
+        switch self {
+        case .friends:
+            "У пользователя нет друзей"
+        case .communities:
+            "У пользователя нет сообществ"
+        case .photos:
+            "У пользователя нет фото"
+        }
+    }
 }
 
 #Preview {
