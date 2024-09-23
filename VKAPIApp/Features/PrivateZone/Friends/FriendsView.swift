@@ -38,7 +38,7 @@ struct FriendsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeAreaBackground(.systemGray6)
         .onAppear(perform: appearAction)
-        .navigationTitle("Друзья")
+        .navigationTitle(Constants.navigationTitle)
     }
 }
 
@@ -95,6 +95,10 @@ private extension FriendsView {
     func toProfile(id: Int) {
         store.send(.toProfile(.id(id)))
     }
+}
+
+fileprivate enum Constants {
+    static let navigationTitle: String = "Друзья"
 }
 
 #Preview {

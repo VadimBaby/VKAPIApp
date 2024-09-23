@@ -60,6 +60,7 @@
 		2CC99E0D2C99729D007FFFD0 /* ProfileAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC99E0C2C99729D007FFFD0 /* ProfileAPIClient.swift */; };
 		2CC99E102C997CC0007FFFD0 /* UserFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC99E0F2C997CC0007FFFD0 /* UserFeature.swift */; };
 		2CC99E122C998AA2007FFFD0 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC99E112C998AA2007FFFD0 /* UserView.swift */; };
+		2CCB6B9F2CA19D9A00FF02B9 /* ServerErrorResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB6B9E2CA19D9A00FF02B9 /* ServerErrorResponseModel.swift */; };
 		2CE1E98C2C9EE10400B2CD9D /* CommunityFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE1E98B2C9EE10400B2CD9D /* CommunityFeature.swift */; };
 		2CE1E98E2C9EE4A900B2CD9D /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE1E98D2C9EE4A900B2CD9D /* CommunityView.swift */; };
 		2CE1E9942C9EEF0D00B2CD9D /* TextInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE1E9932C9EEF0D00B2CD9D /* TextInfoView.swift */; };
@@ -136,6 +137,7 @@
 		2CC99E0C2C99729D007FFFD0 /* ProfileAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAPIClient.swift; sourceTree = "<group>"; };
 		2CC99E0F2C997CC0007FFFD0 /* UserFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeature.swift; sourceTree = "<group>"; };
 		2CC99E112C998AA2007FFFD0 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		2CCB6B9E2CA19D9A00FF02B9 /* ServerErrorResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerErrorResponseModel.swift; sourceTree = "<group>"; };
 		2CE1E98B2C9EE10400B2CD9D /* CommunityFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityFeature.swift; sourceTree = "<group>"; };
 		2CE1E98D2C9EE4A900B2CD9D /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 		2CE1E9932C9EEF0D00B2CD9D /* TextInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInfoView.swift; sourceTree = "<group>"; };
@@ -566,6 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE24AD82C918FE2001ED9FA /* ServerArrayInnerResponseModel.swift */,
+				2CCB6B9E2CA19D9A00FF02B9 /* ServerErrorResponseModel.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -819,6 +822,7 @@
 				2CBBE4002C9EB005009BE58D /* CommunitiesTabCoordinator.swift in Sources */,
 				2CBBE3EF2C9EA439009BE58D /* ServerCommunityModel.swift in Sources */,
 				2CE24AF42C91A4A2001ED9FA /* FriendsFeature.swift in Sources */,
+				2CCB6B9F2CA19D9A00FF02B9 /* ServerErrorResponseModel.swift in Sources */,
 				2C368A7B2C9A7F5D0099D52B /* View.swift in Sources */,
 				2CC99E052C99692E007FFFD0 /* ProfileEndpoint.swift in Sources */,
 				2CE1E99B2C9EF59E00B2CD9D /* Text.swift in Sources */,

@@ -19,13 +19,20 @@ extension FriendsAPIClient: DependencyKey {
     static var liveValue = FriendsAPIClient { userType, offset, count in
         let endpoint: FriendsEndpoint = .getList(of: userType, offset: offset, count: count)
         
-        let response = try await networkClient.sendRequest(with: endpoint)
-            .decode(
-                to: ServerArrayInnerResponseModel<ServerUserModel>.self,
-                at: "response"
-            )
+        let data = try await networkClient.sendRequest(with: endpoint)
         
-        return response.toLocal()
+        if let response = try? data.decode(
+            to: ServerArrayInnerResponseModel<ServerUserModel>.self,
+            at: "response"
+        ) {
+            return response.toLocal()
+        }
+        
+        if let errorResponse = try? data.decode(to: ServerErrorResponseModel.self, at: "error"), errorResponse.isSuccessCode() {
+            return .init(count: nil, items: [])
+        }
+        
+        throw NetworkError.decode(nil)
     }
 }
 
