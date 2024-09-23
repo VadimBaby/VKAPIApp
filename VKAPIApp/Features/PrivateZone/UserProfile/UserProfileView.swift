@@ -17,14 +17,16 @@ struct UserProfileView: View {
             ) {
                 ScrollView {
                     VStack(spacing: 15) {
-                        UserProfileInfoView(
-                            profile: store.profile
+                        ProfileInfoView(
+                            avatar: store.profile.displayPhoto,
+                            title: store.profile.displayName,
+                            content: profileContent
                         )
                         .roundedContainer(isContentLoading: store.isProfileLoading)
                         
                         AvatarGroupView(
                             models: store.friends,
-                            title: "Друзья",
+                            title: Constants.friendsTitle,
                             commonCount: store.friendsCommonCount
                         )
                         .roundedContainer(
@@ -36,7 +38,7 @@ struct UserProfileView: View {
                         
                         AvatarGroupView(
                             models: store.communities,
-                            title: "Сообщества",
+                            title: Constants.communitiesTitle,
                             commonCount: store.communitiesCommonCount
                         )
                         .roundedContainer(
@@ -68,7 +70,36 @@ struct UserProfileView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeAreaBackground(.systemGray6)
             .onFirstAppear(perform: appearAction)
-            .navigationTitle(store.profile.domain ?? Constants.title)
+            .navigationTitle(store.profile.domain ?? Constants.navigationTitle)
+    }
+}
+
+// MARK: - Subviews
+
+private extension UserProfileView {
+    @ViewBuilder
+    func profileContent() -> some View {
+        let profile = store.profile
+        
+        if let domain = profile.domain {
+            Label(domain, systemImage: "at")
+        }
+        
+        if let gender = profile.gender {
+            Label("Пол: \(gender.title)", systemImage: "person.fill")
+        }
+        
+        if let bithday = profile.displayBirthday {
+            Label("День рождения: \(bithday)", systemImage: "gift.fill")
+        }
+        
+        if let city = profile.city {
+            Label("Город: \(city)", systemImage: "house.fill")
+        }
+        
+        if let followers = profile.followersCount {
+            Label("Подписчиков: \(followers)", systemImage: "dot.radiowaves.up.forward")
+        }
     }
 }
 
@@ -97,7 +128,12 @@ private extension UserProfileView {
 }
 
 fileprivate enum Constants {
-    static let title = "Профиль"
+    // MARK: - Titles
+    static let friendsTitle = "Друзья"
+    static let communitiesTitle = "Сообщества"
+    static let navigationTitle = "Профиль"
+    
+    // MARK: - Empty Messages
     static let friendsEmptyMessage = "У вас нет друзей"
     static let communitiesEmptyMessage = "У вас нет сообществ"
     static let photosEmptyMessage = "У вас нет фото"

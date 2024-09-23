@@ -15,12 +15,17 @@ struct CommunityProfileView: View {
         LoadableView(store: store.scope(state: \.loadableView, action: \.loadableView)) {
             ScrollView {
                 VStack {
-                    CommunityProfileInfoView(community: store.community)
-                        .roundedContainer()
+                    ProfileInfoView(
+                        avatar: store.community.displayPhoto,
+                        title: store.community.name,
+                        description: store.community.description,
+                        content: profileContent
+                    )
+                    .roundedContainer()
                     
                     AvatarGroupView(
                         models: store.members,
-                        title: "Участники",
+                        title: Constants.membersTitle,
                         commonCount: store.membersCommonCount
                     )
                     .roundedContainer(
@@ -43,6 +48,23 @@ struct CommunityProfileView: View {
     }
 }
 
+// MARK: - Subviews
+
+private extension CommunityProfileView {
+    @ViewBuilder
+    func profileContent() -> some View {
+        Label(store.community.screenName, systemImage: "at")
+        
+        if let activity = store.community.activity {
+            Label(activity, systemImage: "newspaper.fill")
+        }
+        
+        if let memberCount = store.community.membersCount {
+            Label("Подписчиков: \(memberCount)", systemImage: "dot.radiowaves.up.forward")
+        }
+    }
+}
+
 // MARK: - Functions
 
 extension CommunityProfileView {
@@ -56,6 +78,7 @@ extension CommunityProfileView {
 }
 
 fileprivate enum Constants {
+    static let membersTitle = "Участники"
     static let membersEmptyMessage = "У группы нет участников"
 }
 
