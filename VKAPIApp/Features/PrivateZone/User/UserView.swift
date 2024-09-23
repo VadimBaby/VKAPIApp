@@ -8,8 +8,8 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct UserProfileView: View {
-    @Bindable var store: StoreOf<UserProfileFeature>
+struct UserView: View {
+    @Bindable var store: StoreOf<UserFeature>
     
     var body: some View {
             LoadableView(
@@ -76,7 +76,7 @@ struct UserProfileView: View {
 
 // MARK: - Subviews
 
-private extension UserProfileView {
+private extension UserView {
     @ViewBuilder
     func profileContent() -> some View {
         let profile = store.profile
@@ -105,7 +105,7 @@ private extension UserProfileView {
 
 // MARK: - Functions
 
-private extension UserProfileView {
+private extension UserView {
     func appearAction() {
         store.send(.onAppear)
     }
@@ -140,10 +140,10 @@ fileprivate enum Constants {
 }
 
 #Preview {
-    UserProfileView(store: .init(
-        initialState: UserProfileFeature.State(userType: .me),
+    UserView(store: .init(
+        initialState: UserFeature.State(userType: .me),
         reducer: {
-            UserProfileFeature()
+            UserFeature()
         })
     )
 }

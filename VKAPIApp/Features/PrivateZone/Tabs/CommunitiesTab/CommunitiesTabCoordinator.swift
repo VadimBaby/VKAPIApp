@@ -36,7 +36,7 @@ struct CommunitiesTabCoordinator {
             switch action {
             // MARK: - Transitions
             case .communities(.toCommunityProfile(let community)):
-                state.path.append(.communityProfile(CommunityProfileFeature.State(community: community)))
+                state.path.append(.communityProfile(CommunityFeature.State(community: community)))
                 return .none
             case .binding, .communities, .path:
                 return .none
@@ -49,6 +49,6 @@ struct CommunitiesTabCoordinator {
 extension CommunitiesTabCoordinator {
     @Reducer(state: .equatable)
     enum Path {
-        case communityProfile(CommunityProfileFeature)
+        case communityProfile(CommunityFeature)
     }
 }

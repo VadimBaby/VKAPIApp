@@ -11,14 +11,14 @@ import ComposableArchitecture
 struct ProfileTabCoordinator {
     @ObservableState
     struct State: Equatable {
-        var userProfile = UserProfileFeature.State(userType: .me)
+        var userProfile = UserFeature.State(userType: .me)
         
         // MARK: - Transitions
         var path = StackState<Path.State>()
     }
     
     enum Action: BindableAction {
-        case userProfile(UserProfileFeature.Action)
+        case userProfile(UserFeature.Action)
         case binding(BindingAction<State>)
         
         // MARK: - Transitions
@@ -29,7 +29,7 @@ struct ProfileTabCoordinator {
         BindingReducer()
         
         Scope(state: \.userProfile, action: \.userProfile) {
-            UserProfileFeature()
+            UserFeature()
         }
         
         Reduce { state, action in

@@ -17,7 +17,7 @@ struct FriendsTabView: View {
         } destination: { store in
             switch store.case {
             case let .profile(store):
-                UserProfileView(store: store)
+                UserView(store: store)
             case let .friends(store):
                 FriendsView(store: store)
             case let .communities(store):
@@ -25,7 +25,7 @@ struct FriendsTabView: View {
             case let .photos(store):
                 PhotosView(store: store)
             case let .communityProfile(store):
-                CommunityProfileView(store: store)
+                CommunityView(store: store)
             }
         }
     }

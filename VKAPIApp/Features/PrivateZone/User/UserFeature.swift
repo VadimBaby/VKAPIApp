@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct UserProfileFeature {
+struct UserFeature {
     @ObservableState
     struct State: Equatable {
         let userType: UserType

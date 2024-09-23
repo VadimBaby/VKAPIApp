@@ -35,10 +35,10 @@ struct FriendsTabCoordinator {
             // MARK: - Transitions
             // MARK: - Profile
             case .friends(.toProfile(let userType)):
-                state.path.append(.profile(UserProfileFeature.State(userType: userType)))
+                state.path.append(.profile(UserFeature.State(userType: userType)))
                 return .none
             case .path(.element(id: _, action: .friends(.toProfile(let userType)))):
-                state.path.append(.profile(UserProfileFeature.State(userType: userType)))
+                state.path.append(.profile(UserFeature.State(userType: userType)))
                 return .none
                 
             // MARK: - Friends
@@ -51,7 +51,7 @@ struct FriendsTabCoordinator {
                 state.path.append(.communities(CommunitiesFeature.State(userType: userType)))
                 return .none
             case .path(.element(id: _, action: .communities(.toCommunityProfile(let community)))):
-                state.path.append(.communityProfile(CommunityProfileFeature.State(community: community)))
+                state.path.append(.communityProfile(CommunityFeature.State(community: community)))
                 return .none
                 
             // MARK: - Photos
@@ -70,10 +70,10 @@ struct FriendsTabCoordinator {
 extension FriendsTabCoordinator {
     @Reducer(state: .equatable)
     enum Path {
-        case profile(UserProfileFeature)
+        case profile(UserFeature)
         case friends(FriendsFeature)
         case communities(CommunitiesFeature)
         case photos(PhotosFeature)
-        case communityProfile(CommunityProfileFeature)
+        case communityProfile(CommunityFeature)
     }
 }

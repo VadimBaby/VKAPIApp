@@ -13,7 +13,7 @@ struct ProfileTabView: View {
     
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-            UserProfileView(store: store.scope(state: \.userProfile, action: \.userProfile))
+            UserView(store: store.scope(state: \.userProfile, action: \.userProfile))
         } destination: { store in
             switch store.case {
             case let .photos(store):

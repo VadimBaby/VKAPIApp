@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct CommunityProfileFeature {
+struct CommunityFeature {
     @ObservableState
     struct State: Equatable {
         var community: Community

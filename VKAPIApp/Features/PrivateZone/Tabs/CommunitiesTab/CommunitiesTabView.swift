@@ -17,7 +17,7 @@ struct CommunitiesTabView: View {
         } destination: { store in
             switch store.case {
             case let .communityProfile(store):
-                CommunityProfileView(store: store)
+                CommunityView(store: store)
             }
         }
     }

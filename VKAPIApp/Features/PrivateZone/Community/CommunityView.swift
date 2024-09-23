@@ -8,8 +8,8 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct CommunityProfileView: View {
-    @Bindable var store: StoreOf<CommunityProfileFeature>
+struct CommunityView: View {
+    @Bindable var store: StoreOf<CommunityFeature>
     
     var body: some View {
         LoadableView(store: store.scope(state: \.loadableView, action: \.loadableView)) {
@@ -50,7 +50,7 @@ struct CommunityProfileView: View {
 
 // MARK: - Subviews
 
-private extension CommunityProfileView {
+private extension CommunityView {
     @ViewBuilder
     func profileContent() -> some View {
         Label(store.community.screenName, systemImage: "at")
@@ -67,7 +67,7 @@ private extension CommunityProfileView {
 
 // MARK: - Functions
 
-extension CommunityProfileView {
+extension CommunityView {
     func appearAction() {
         store.send(.onAppear)
     }
@@ -83,8 +83,8 @@ fileprivate enum Constants {
 }
 
 #Preview {
-    CommunityProfileView(store: .init(
-        initialState: CommunityProfileFeature.State(community: .mock),
-        reducer: { CommunityProfileFeature() }
+    CommunityView(store: .init(
+        initialState: CommunityFeature.State(community: .mock),
+        reducer: { CommunityFeature() }
     ))
 }
