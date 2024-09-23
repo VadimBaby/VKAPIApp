@@ -11,18 +11,18 @@ struct ProfileInfoView<Content: View>: View {
     private let avatar: URL?
     private let title: String
     private let description: String?
-    private let content: () -> Content
+    private let infoContent: () -> Content
     
     init(
         avatar: URL?,
         title: String,
         description: String? = nil,
-        @ViewBuilder content: @escaping () -> Content = { EmptyView() }
+        @ViewBuilder infoContent: @escaping () -> Content = { EmptyView() }
     ) {
         self.avatar = avatar
         self.title = title
         self.description = description
-        self.content = content
+        self.infoContent = infoContent
     }
     
     var body: some View {
@@ -43,7 +43,7 @@ struct ProfileInfoView<Content: View>: View {
                         .font(.subheadline)
                 }
                 
-                VStack(alignment: .leading, spacing: 10, content: content)
+                VStack(alignment: .leading, spacing: 10, content: infoContent)
             }
             .padding()
         }

@@ -20,7 +20,7 @@ struct UserProfileView: View {
                         ProfileInfoView(
                             avatar: store.profile.displayPhoto,
                             title: store.profile.displayName,
-                            content: profileContent
+                            infoContent: profileContent
                         )
                         .roundedContainer(isContentLoading: store.isProfileLoading)
                         

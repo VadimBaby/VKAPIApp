@@ -48,7 +48,20 @@ private extension FriendsView {
     @ViewBuilder
     func listItemView(friend: User) -> some View {
         Button(action: { toProfile(id: friend.id) }) {
-            FriendsListItemView(friend: friend)
+            ProfileListItemView(
+                avatar: friend.displayPhoto,
+                online: friend.online,
+                onlineMobile: friend.onlineMobile,
+                title: friend.displayName
+            ) {
+                if let city = friend.city {
+                    TextInfoView(title: "Город", value: city)
+                }
+                
+                if let displayBirthday = friend.displayBirthday {
+                    TextInfoView(title: "Дата рождения", value: displayBirthday)
+                }
+            }
         }
     }
     

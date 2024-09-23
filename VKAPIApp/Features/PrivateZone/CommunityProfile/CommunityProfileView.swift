@@ -19,7 +19,7 @@ struct CommunityProfileView: View {
                         avatar: store.community.displayPhoto,
                         title: store.community.name,
                         description: store.community.description,
-                        content: profileContent
+                        infoContent: profileContent
                     )
                     .roundedContainer()
                     

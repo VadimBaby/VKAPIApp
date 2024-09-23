@@ -49,7 +49,18 @@ private extension CommunitiesView {
     @ViewBuilder
     func listItemView(community: Community) -> some View {
         Button(action: { toProfile(of: community) }) {
-            CommunitiesListItemView(community: community)
+            ProfileListItemView(
+                avatar: community.displayPhoto,
+                title: community.name
+            ) {
+                if let activity = community.activity {
+                    TextInfoView(title: activity)
+                }
+                
+                if let membersCount = community.membersCount {
+                    TextInfoView(title: "Подписчиков", value: membersCount)
+                }
+            }
         }
     }
     
