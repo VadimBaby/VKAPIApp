@@ -22,17 +22,10 @@ struct ContentView: View {
                     TabBarFeature()
                 }
             ))
-            .onFirstAppear(perform: setupTabBar)
             .onFirstAppear {
                 print(token)
             }
         }
-    }
-}
-
-private extension ContentView {
-    func setupTabBar() {
-        UITabBar.appearance().unselectedItemTintColor = .black
     }
 }
 

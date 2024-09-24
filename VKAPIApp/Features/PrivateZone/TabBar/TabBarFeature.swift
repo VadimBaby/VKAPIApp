@@ -61,7 +61,7 @@ struct TabBarFeature {
 
 
 extension TabBarFeature {
-    enum Tab: String {
+    enum Tab: String, CaseIterable, Equatable {
         case friends, communities, profile
         
         var icon: String {

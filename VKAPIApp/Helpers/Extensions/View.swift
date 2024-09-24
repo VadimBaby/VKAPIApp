@@ -39,4 +39,11 @@ extension View {
         self
             .background(color.ignoresSafeArea())
     }
+    
+    func setupTab(_ tab: TabBarFeature.Tab) -> some View {
+        self
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .tag(tab)
+            .toolbar(.hidden, for: .tabBar)
+    }
 }
