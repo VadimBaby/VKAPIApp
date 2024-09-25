@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct CommunityFeature {
     @ObservableState
     struct State: Equatable {
-        var community: Community
+        let community: Community
         var loadableView = LoadableViewFeature.State()
         
         // MARK: - Members

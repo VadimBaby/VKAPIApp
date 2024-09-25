@@ -351,6 +351,7 @@
 		2C1104592C95DB94007054F6 /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				2CBBE3EB2C9E9275009BE58D /* UserType.swift */,
 				2CE24AE22C919587001ED9FA /* Gender.swift */,
 				2C11045A2C95DBBA007054F6 /* Plarform.swift */,
 				2C11045C2C95DC3C007054F6 /* ErrorEntity.swift */,
@@ -424,14 +425,6 @@
 				2CBBE3E82C9E87AA009BE58D /* FriendsTabView.swift */,
 			);
 			path = FriendsTab;
-			sourceTree = "<group>";
-		};
-		2CBBE3EA2C9E920E009BE58D /* Types */ = {
-			isa = PBXGroup;
-			children = (
-				2CBBE3EB2C9E9275009BE58D /* UserType.swift */,
-			);
-			path = Types;
 			sourceTree = "<group>";
 		};
 		2CBBE3ED2C9EA425009BE58D /* Community */ = {
@@ -621,7 +614,6 @@
 		2CE24AEA2C919B88001ED9FA /* API */ = {
 			isa = PBXGroup;
 			children = (
-				2CBBE3EA2C9E920E009BE58D /* Types */,
 				2CBBE3F32C9EA70D009BE58D /* Сommunities */,
 				2CC99E032C996917007FFFD0 /* Profile */,
 				2CE24AED2C919EA8001ED9FA /* Friends */,

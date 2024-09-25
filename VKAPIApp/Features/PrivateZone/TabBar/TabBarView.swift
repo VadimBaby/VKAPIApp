@@ -12,7 +12,7 @@ struct TabBarView: View {
     
     @Bindable var store: StoreOf<TabBarFeature>
     
-    @State private var tabs: [AnimatedTab] = TabBarFeature.Tab.allCases.map{ .init(tab: $0) }
+    @State private var animatedTabs: [AnimatedTab] = TabBarFeature.Tab.allCases.map{ .init(tab: $0) }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,7 +33,7 @@ private extension TabBarView {
     @ViewBuilder
     var tabsView: some View {
         HStack(spacing: 0) {
-            ForEach($tabs) { $animatedTab in
+            ForEach($animatedTabs) { $animatedTab in
                 let tab = animatedTab.tab
                 
                 VStack(spacing: 4) {
@@ -54,8 +54,8 @@ private extension TabBarView {
                 .padding(.top, 8)
                 .contentShape(.rect)
                 .onTapGesture {
+                    store.send(.changeTab(tab))
                     withAnimation(.bouncy) {
-                        store.send(.changeTab(tab))
                         animatedTab.isAnimating = true
                     } completion: {
                         var transaction = Transaction()
@@ -70,6 +70,8 @@ private extension TabBarView {
         .background(Color.primary.opacity(0.05))
     }
 }
+
+// MARK: - Tabs
 
 private extension TabBarView {
     @ViewBuilder
