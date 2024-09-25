@@ -32,7 +32,7 @@ struct UserView: View {
                         .roundedContainer(
                             isContentLoading: store.isFriendsLoading,
                             isContentEmpty: store.friends.isEmpty,
-                            emptyStateMessage: EmptyMessage.friends.getTitle(of: store.userType),
+                            emptyContent: EmptyContentView(message: EmptyMessage.friends.getTitle(of: store.userType)),
                             action: toFriends
                         )
                         
@@ -44,7 +44,7 @@ struct UserView: View {
                         .roundedContainer(
                             isContentLoading: store.isCommunitiesLoading,
                             isContentEmpty: store.communities.isEmpty,
-                            emptyStateMessage: EmptyMessage.communities.getTitle(of: store.userType),
+                            emptyContent: EmptyContentView(message: EmptyMessage.communities.getTitle(of: store.userType)),
                             action: toCommunities
                         )
                         
@@ -54,7 +54,7 @@ struct UserView: View {
                         .roundedContainer(
                             isContentLoading: store.isPhotosLoading,
                             isContentEmpty: store.photosSizes.isEmpty,
-                            emptyStateMessage: EmptyMessage.photos.getTitle(of: store.userType),
+                            emptyContent: EmptyContentView(message: EmptyMessage.photos.getTitle(of: store.userType)),
                             action: toPhotos
                         )
                         
