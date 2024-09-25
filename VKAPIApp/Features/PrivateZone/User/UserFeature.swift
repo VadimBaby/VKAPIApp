@@ -8,12 +8,11 @@
 import ComposableArchitecture
 
 @Reducer
-struct ProfileFeature {
-    
+struct UserFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        let userType: UserType
         var loadableView = LoadableViewFeature.State()
-        var path = StackState<Path.State>()
         
         // MARK: - Profile
         var isProfileLoading: Bool = false
@@ -23,6 +22,11 @@ struct ProfileFeature {
         var isFriendsLoading: Bool = false
         var friends: [User] = []
         var friendsCommonCount: Int = 0
+        
+        // MARK: - Communities
+        var isCommunitiesLoading: Bool = false
+        var communities: [Community] = []
+        var communitiesCommonCount: Int = 0
         
         // MARK: - Photo
         var isPhotosLoading = false
@@ -37,23 +41,27 @@ struct ProfileFeature {
         case onRefresh
         case loadableView(LoadableViewFeature.Action)
         case binding(BindingAction<State>)
-        case path(StackAction<Path.State, Path.Action>)
         
         // MARK: - Transitions
-        case showPhotos
+        case toFriends(UserType)
+        case toCommunities(UserType)
+        case toPhotos(UserType)
         
         // MARK: - Requests
-        case allDataRequest
+        case allDataRequests
         case profileRequest
         case profileResponse(Result<User, Error>)
         case friendsRequest
-        case friendsResponse(Result<ResponseModel<User>, Error>)
+        case friendsResponse(Result<ArrayInnerResponseModel<User>, Error>)
+        case communitiesRequest
+        case communitiesResponse(Result<ArrayInnerResponseModel<Community>, Error>)
         case photosRequest
         case photosResponse(Result<[Photo], Error>)
     }
     
     @Dependency(\.friendsClient) private var friendsClient
     @Dependency(\.profileClient) private var profileClient
+    @Dependency(\.communitiesClient) private var communitiesClient
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -67,7 +75,7 @@ struct ProfileFeature {
             case .onAppear, .loadableView(.onRepeat):
                 state.loadableView.screenState = .loaded
                 
-                return .send(.allDataRequest)
+                return .send(.allDataRequests)
             case .onRefresh:
                 state.loadableView.screenState = .loaded
                 
@@ -81,95 +89,108 @@ struct ProfileFeature {
                 state.isPhotosLoading = false
                 state.photos = []
                 
-                return .send(.allDataRequest)
-            case .allDataRequest:
+                return .send(.allDataRequests)
+            case .allDataRequests:
                 return .merge(
                     .send(.profileRequest),
                     .send(.friendsRequest),
+                    .send(.communitiesRequest),
                     .send(.photosRequest)
                 )
             
             // MARK: - Profile
             case .profileRequest:
                 state.isProfileLoading = true
-                return .run { send in
+                return .run { [userType = state.userType] send in
                     await send(
                         .profileResponse(
                             Result {
-                                try await profileClient.getProfile()
+                                try await profileClient.getProfile(userType)
                             }
                         )
                     )
                 }
-            case let .profileResponse(.success(model)):
-                state.profile = model
-                state.isProfileLoading = false
+            case let .profileResponse(.success(profile)):
+                defer { state.isProfileLoading = false }
+                state.profile = profile
                 return .none
                 
             // MARK: - Friends
             case .friendsRequest:
                 state.isFriendsLoading = true
-                return .run { send in
+                return .run { [userType = state.userType] send in
                     await send(
                         .friendsResponse(
                             Result {
                                 try await friendsClient.getList(
-                                    Constants.friendsOffset,
-                                    Constants.friendsCount
+                                    userType,
+                                    Constants.offset,
+                                    Constants.count
                                 )
                             }
                         )
                     )
                 }
-            case let .friendsResponse(.success(model)):
-                state.friends = model.items
-                state.friendsCommonCount = model.count.orZero
-                state.isFriendsLoading = false
+            case let .friendsResponse(.success(result)):
+                defer { state.isFriendsLoading = false }
+                state.friends = result.items
+                state.friendsCommonCount = result.count.orZero
+                return .none
+                
+            // MARK: - Community
+            case .communitiesRequest:
+                state.isCommunitiesLoading = true
+                return .run { [userType = state.userType] send in
+                    await send(
+                        .communitiesResponse(
+                            Result {
+                                try await communitiesClient.getList(
+                                    userType,
+                                    Constants.offset,
+                                    Constants.count
+                                )
+                            }
+                        )
+                    )
+                }
+            case let .communitiesResponse(.success(result)):
+                defer { state.isCommunitiesLoading = false }
+                state.communities = result.items
+                state.communitiesCommonCount = result.count.orZero
                 return .none
                 
             // MARK: - Photos
             case .photosRequest:
                 state.isPhotosLoading = true
-                return .run { send in
+                return .run { [userType = state.userType] send in
                     await send(
                         .photosResponse(
                             Result {
-                                try await profileClient.getPhotos(nil)
+                                try await profileClient.getPhotos(userType, .wall)
                             }
                         )
                     )
                 }
-            case let .photosResponse(.success(models)):
-                state.photos = models
-                state.isPhotosLoading = false
+            case let .photosResponse(.success(photos)):
+                defer { state.isPhotosLoading = false }
+                state.photos = photos
                 return .none
             
             // MARK: - Errors
             case let .profileResponse(.failure(error)),
                 let .friendsResponse(.failure(error)),
+                let .communitiesResponse(.failure(error)),
                 let .photosResponse(.failure(error)):
-                state.loadableView.error = .init(from: error)
+                state.loadableView.error = ErrorEntity(from: error)
                 return .none
-            // MARK: - Transitions
-            case .showPhotos:
-                state.path.append(.photos(PhotosFeature.State()))
-                return .none
-            case .path, .loadableView, .binding:
+            case .loadableView, .binding, .toFriends, .toCommunities, .toPhotos:
                 return .none
             }
         }
-        .forEach(\.path, action: \.path)
-    }
-}
-
-extension ProfileFeature {
-    @Reducer(state: .equatable)
-    enum Path {
-        case photos(PhotosFeature)
     }
 }
 
 fileprivate enum Constants {
-    static let friendsOffset = 0
-    static let friendsCount = 4
+    static let offset = 0
+    static let count = 4
 }

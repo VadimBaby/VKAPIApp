@@ -36,10 +36,12 @@ struct PhotosView: View {
                 refreshAction()
             }
         }
-        .navigationTitle("Фотографии")
+        .navigationTitle(Constants.navigationTitle)
         .onAppear(perform: appearAction)
     }
 }
+
+// MARK: - Constants
 
 private extension PhotosView {
     func appearAction() {
@@ -52,6 +54,7 @@ private extension PhotosView {
 }
 
 fileprivate enum Constants {
+    static let navigationTitle = "Фотографии"
     static let gridSize = (UIScreen.main.bounds.width - 32 - 20) / 3
     static let gridItems: [GridItem] = Array(
         repeating: .init(.fixed(gridSize)),
@@ -61,7 +64,7 @@ fileprivate enum Constants {
 
 #Preview {
     PhotosView(store: .init(
-        initialState: PhotosFeature.State(),
+        initialState: PhotosFeature.State(userType: .me),
         reducer: { PhotosFeature() }
     ))
 }

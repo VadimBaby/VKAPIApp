@@ -9,10 +9,10 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct FriendsListFeature {
-    
+struct FriendsFeature {
     @ObservableState
     struct State: Equatable {
+        let userType: UserType
         var friends: [User] = []
         var loadableView = LoadableViewFeature.State()
         
@@ -29,9 +29,12 @@ struct FriendsListFeature {
         case loadableView(LoadableViewFeature.Action)
         case binding(BindingAction<State>)
         
+        // MARK: - Transitions
+        case toProfile(UserType)
+        
         // MARK: - Requests
         case getFriends
-        case getFriendsResponse(Result<ResponseModel<User>, Error>)
+        case getFriendsResponse(Result<ArrayInnerResponseModel<User>, Error>)
     }
     
     @Dependency(\.friendsClient) private var friendsClient
@@ -54,6 +57,8 @@ struct FriendsListFeature {
                 state.loadableView.error = nil
                 
                 return .send(.getFriends)
+            
+            // MARK: - Friends
             case .getFriends:
                 if state.friends.isEmpty {
                     state.loadableView.screenState = .loading
@@ -61,10 +66,11 @@ struct FriendsListFeature {
                     state.isPaginationLoading = true
                 }
                 
-                return .run { [offset = state.paginationOffset] send in
+                return .run { [userType = state.userType, offset = state.paginationOffset] send in
                     await send(.getFriendsResponse(
                         Result {
                             try await friendsClient.getList(
+                                userType,
                                 offset,
                                 Constants.paginationCount
                             )
@@ -91,9 +97,9 @@ struct FriendsListFeature {
                 
                 return .none
             case let .getFriendsResponse(.failure(error)):
-                state.loadableView.error = .init(from: error)
+                state.loadableView.error = ErrorEntity(from: error)
                 return .none
-            case .binding, .loadableView:
+            case .binding, .loadableView, .toProfile:
                 return .none
             }
         }

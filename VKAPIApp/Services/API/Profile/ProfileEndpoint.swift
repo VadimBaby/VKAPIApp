@@ -8,8 +8,8 @@
 import AsyncNetwork
 
 enum ProfileEndpoint: RequestEndpoint {
-    case getMyProfile
-    case getPhotos(AlbumIndentifier?)
+    case getProfile(of: UserType)
+    case getPhotos(of: UserType, album: AlbumIndentifier?)
     
     var host: String {
         Consts.Base.hostURL
@@ -17,7 +17,7 @@ enum ProfileEndpoint: RequestEndpoint {
     
     var path: String {
         switch self {
-        case .getMyProfile:
+        case .getProfile:
             "/method/users.get"
         case .getPhotos:
             "/method/photos.get"
@@ -32,10 +32,18 @@ enum ProfileEndpoint: RequestEndpoint {
         var params: [String : String] = [:]
         
         switch self {
-        case .getMyProfile:
+        case .getProfile(let userType):
             params["fields"] = "bdate,domain,followers_count,photo_50,photo_200,sex,last_seen,online"
-        case .getPhotos(let indentifier):
+            
+            if let userId = userType.userId {
+                params["user_ids"] = userId
+            }
+        case .getPhotos(of: let userType, album: let indentifier):
             params["album_id"] = (indentifier ?? .profile).queryParam
+            
+            if let userId = userType.userId {
+                params["owner_id"] = userId
+            }
         }
         
         params["access_token"] = UserStorage.shared.token.orEmpty

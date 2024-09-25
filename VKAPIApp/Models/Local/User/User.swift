@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct User: Identifiable {
+struct User: Identifiable, Avatarable {
     let id: Int
     let firstName: String
     let lastName: String
     let birthDate: DateComponents? 
     let city: String?
     let lastSeen: LastSeen?
-    let photoSmall: URL?
-    let photo: URL?
-    let photoBig: URL?
+    let avatarSmall: URL?
+    let avatar: URL?
+    let avatarBig: URL?
     let online: Bool
     let onlineMobile: Bool?  
     let gender: Gender?
@@ -34,14 +34,10 @@ extension User {
               let date = Calendar.current.date(from: birthDate) else { return nil }
         
         if birthDate.year.isNotNil {
-            return DateFormatters.dayAndMonthAndYearFormatter.string(from: date)
+            return DateFormatters.dayAndMonthAndYearFormatter.string(from: date) + "г"
         } else {
             return DateFormatters.dayAndMonthFormatter.string(from: date)
         }
-    }
-    
-    var displayPhoto: URL? {
-        return photo ?? photoBig ?? photoSmall ?? nil
     }
 }
 
@@ -56,9 +52,9 @@ extension User {
             birthDate: serverModel.birthDate?.toDateComponents(),
             city: serverModel.city?.title,
             lastSeen: serverModel.lastSeen?.toLocal(),
-            photoSmall: URL(string: serverModel.photoSmall.orEmpty),
-            photo: URL(string: serverModel.photo.orEmpty),
-            photoBig: URL(string: serverModel.photoBig.orEmpty),
+            avatarSmall: URL(string: serverModel.photoSmall.orEmpty),
+            avatar: URL(string: serverModel.photo.orEmpty),
+            avatarBig: URL(string: serverModel.photoBig.orEmpty),
             online: serverModel.online?.bool() ?? false,
             onlineMobile: serverModel.onlineMobile?.bool(),
             gender: .init(rawValue: serverModel.sex.orZero),
@@ -78,9 +74,9 @@ extension User {
         birthDate: "27.4".toDateComponents(),
         city: "Новосибирск",
         lastSeen: .init(date: Date(timeIntervalSince1970: 1725931616), plarfrom: .iPhone),
-        photoSmall: .init(string: "https://clck.ru/3DEnoW"),
-        photo: .init(string: "https://clck.ru/3DEnoW"),
-        photoBig: .init(string: "https://clck.ru/3DEnoW"),
+        avatarSmall: .init(string: "https://clck.ru/3DEnoW"),
+        avatar: .init(string: "https://clck.ru/3DEnoW"),
+        avatarBig: .init(string: "https://clck.ru/3DEnoW"),
         online: true,
         onlineMobile: false,
         gender: .male,
@@ -95,9 +91,9 @@ extension User {
         birthDate: nil,
         city: nil,
         lastSeen: nil,
-        photoSmall: nil,
-        photo: nil,
-        photoBig: nil,
+        avatarSmall: nil,
+        avatar: nil,
+        avatarBig: nil,
         online: false,
         onlineMobile: nil,
         gender: nil,

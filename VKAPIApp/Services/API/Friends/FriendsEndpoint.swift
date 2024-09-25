@@ -8,7 +8,7 @@
 import AsyncNetwork
 
 enum FriendsEndpoint: RequestEndpoint {
-    case getList(offset: Int, count: Int)
+    case getList(of: UserType, offset: Int, count: Int)
     
     var host: String {
         Consts.Base.hostURL
@@ -23,11 +23,16 @@ enum FriendsEndpoint: RequestEndpoint {
     }
     
     var query: RequestQuery? {
-        guard case let .getList(offset, count) = self else { return nil }
+        guard case let .getList(userType, offset, count) = self else { return nil }
         
         var params: [String: String] = [:]
         
         params["access_token"] = UserStorage.shared.token.orEmpty
+        
+        if let id = userType.userId {
+            params["user_id"] = id
+        }
+        
         params["fields"] = "bdate,city,country,last_seen,online,photo_50,photo_100,sex"
         params["offset"] = String(offset)
         params["count"] = String(count)

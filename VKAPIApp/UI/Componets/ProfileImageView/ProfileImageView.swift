@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProfileImageView: View {
+struct CircleImageView: View {
     
     private let url: URL?
     private let online: Bool?
@@ -33,7 +33,7 @@ struct ProfileImageView: View {
     }
 }
 
-private extension ProfileImageView {
+private extension CircleImageView {
     @ViewBuilder func profileImage(_ image: Image) -> some View {
         image
             .resizable()
@@ -78,7 +78,7 @@ private extension ProfileImageView {
     ZStack {
         Color.gray.ignoresSafeArea()
         
-        ProfileImageView(
+        CircleImageView(
             url: .init(string: "https://clck.ru/3DEnoW"),
             online: true,
             onlineMobile: true

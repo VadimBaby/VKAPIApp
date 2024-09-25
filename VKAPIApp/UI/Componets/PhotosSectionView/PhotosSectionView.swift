@@ -31,7 +31,6 @@ struct PhotosSectionView: View {
 
 fileprivate enum Constants {
     static let imageSize: Double = 144
-    static let emptyStateMessage = "У вас нет фотографий"
 }
 
 #Preview {

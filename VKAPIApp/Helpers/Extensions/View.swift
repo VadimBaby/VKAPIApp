@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     func roundedContainer(
-        isContentLoading: Bool,
+        isContentLoading: Bool = false,
         isContentEmpty: Bool = false,
         emptyStateMessage: String = "Пусто",
         action: VoidAction? = nil
@@ -38,5 +38,12 @@ extension View {
     func ignoresSafeAreaBackground(_ color: Color) -> some View {
         self
             .background(color.ignoresSafeArea())
+    }
+    
+    func setupTab(_ tab: TabBarFeature.Tab) -> some View {
+        self
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .tag(tab)
+            .toolbar(.hidden, for: .tabBar)
     }
 }
