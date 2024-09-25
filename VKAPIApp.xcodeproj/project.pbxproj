@@ -43,6 +43,7 @@
 		2C7434EF2C8FF31D0043B3AB /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7434EE2C8FF31D0043B3AB /* FirstAppearModifier.swift */; };
 		2CA387522C9C1ABC0016A75B /* PhotosFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA387512C9C1ABC0016A75B /* PhotosFeature.swift */; };
 		2CA387542C9C1DCF0016A75B /* PhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA387532C9C1DCF0016A75B /* PhotosView.swift */; };
+		2CB370232CA3C3CF005A6D33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CB370222CA3C3CF005A6D33 /* LaunchScreen.storyboard */; };
 		2CBBE3E72C9E85E4009BE58D /* FriendsTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3E62C9E85E4009BE58D /* FriendsTabCoordinator.swift */; };
 		2CBBE3E92C9E87AA009BE58D /* FriendsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3E82C9E87AA009BE58D /* FriendsTabView.swift */; };
 		2CBBE3EC2C9E9275009BE58D /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBBE3EB2C9E9275009BE58D /* UserType.swift */; };
@@ -120,6 +121,7 @@
 		2C7434EE2C8FF31D0043B3AB /* FirstAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAppearModifier.swift; sourceTree = "<group>"; };
 		2CA387512C9C1ABC0016A75B /* PhotosFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFeature.swift; sourceTree = "<group>"; };
 		2CA387532C9C1DCF0016A75B /* PhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosView.swift; sourceTree = "<group>"; };
+		2CB370222CA3C3CF005A6D33 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2CBBE3E62C9E85E4009BE58D /* FriendsTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTabCoordinator.swift; sourceTree = "<group>"; };
 		2CBBE3E82C9E87AA009BE58D /* FriendsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTabView.swift; sourceTree = "<group>"; };
 		2CBBE3EB2C9E9275009BE58D /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 			children = (
 				2C0E3AF42C88B66700FE9E13 /* Assets.xcassets */,
 				2C1104512C9587A9007054F6 /* Color.swift */,
+				2CB370222CA3C3CF005A6D33 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -766,6 +769,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CB370232CA3C3CF005A6D33 /* LaunchScreen.storyboard in Resources */,
 				2C0E3B052C88B69B00FE9E13 /* Preview Assets.xcassets in Resources */,
 				2C0E3AF52C88B66700FE9E13 /* Assets.xcassets in Resources */,
 			);
