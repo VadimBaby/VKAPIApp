@@ -31,7 +31,7 @@ struct CommunityView: View {
                     .roundedContainer(
                         isContentLoading: store.isMembersLoading,
                         isContentEmpty: store.members.isEmpty,
-                        emptyStateMessage: Constants.membersEmptyMessage
+                        emptyContent: EmptyContentView(message: Constants.membersEmptyMessage)
                     )
                 }
                 .padding()

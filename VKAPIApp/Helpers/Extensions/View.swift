@@ -11,7 +11,7 @@ extension View {
     func roundedContainer(
         isContentLoading: Bool = false,
         isContentEmpty: Bool = false,
-        emptyStateMessage: String = "Пусто",
+        emptyContent: EmptyContentView? = nil,
         action: VoidAction? = nil
     ) -> some View {
         Group {
@@ -19,20 +19,24 @@ extension View {
                 ProgressView()
                     .frame(maxWidth: .infinity, alignment: .center)
                     .frame(height: 70)
-            } else if isContentEmpty {
-                Text(emptyStateMessage)
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .center)
-            } else if let action {
-                Button(action: action) {
-                    self
-                }
+                    .background(Color.opposite)
+                    .clipShape(.rect(cornerRadius: 15))
+            } else if let emptyContent, isContentEmpty {
+                emptyContent
             } else {
-                self
+                Group {
+                    if let action {
+                        Button(action: action) {
+                            self
+                        }
+                    } else {
+                        self
+                    }
+                }
+                .background(Color.opposite)
+                .clipShape(.rect(cornerRadius: 15))
             }
         }
-        .background(Color.opposite)
-        .clipShape(.rect(cornerRadius: 15))
     }
     
     func ignoresSafeAreaBackground(_ color: Color) -> some View {
