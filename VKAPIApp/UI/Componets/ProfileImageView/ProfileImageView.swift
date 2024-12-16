@@ -23,9 +23,18 @@ struct CircleImageView: View {
     
     var body: some View {
         if let url {
-            AsyncImage(url: url, content: profileImage) {
-                ProgressView()
-                    .frame(width: size, height: size)
+            AsyncImage(url: url) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                        .frame(width: size, height: size)
+                case .success(let image):
+                    profileImage(image)
+                case .failure:
+                    profileImage(.init(.emptyUser))
+                @unknown default:
+                    profileImage(.init(.emptyUser))
+                }
             }
         } else {
             profileImage(.init(.emptyUser))
