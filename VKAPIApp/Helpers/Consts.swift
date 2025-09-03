@@ -9,7 +9,7 @@ import Foundation
 
 enum Consts {
     enum Auth {
-        static let vkURL = "https://oauth.vk.com/authorize"
+        static let vkURL = "https://oauth.vk.ru/authorize"
         static let clientIDKey = "client_id"
         static let clientIDValue = "52237346"
         static let displayKey = "display"
@@ -19,10 +19,10 @@ enum Consts {
         static let responseTypeKey = "response_type"
         static let responseTypeValue = "token"
         static let redirectUriKey = "redirect_uri"
-        static let redirectUriValue = "https://oauth.vk.com/blank.html"
+        static let redirectUriValue = "https://oauth.vk.ru/blank.html"
     }
     
     enum Base {
-        static let hostURL = "api.vk.com"
+        static let hostURL = "api.vk.ru"
     }
 }
